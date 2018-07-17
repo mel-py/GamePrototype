@@ -8,11 +8,13 @@ class Game {
 public:
 	Game();
 	~Game();
-	void game_loop(Graphics &graphics);
-private:
-	void draw(Graphics &graphics);
 
-	Sprite testSprite;
+	void game_loop();
+	void draw(Graphics &graphics);
+private:
+	Sprite _testSprite;
+
+	int _posx, _posy;
 };
 
 #endif

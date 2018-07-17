@@ -3,6 +3,9 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <string>
+
+using namespace std;
 
 class Graphics {
 public:
@@ -10,9 +13,10 @@ public:
 	Graphics(int screenWidth, int screenHeight);
 	~Graphics();
 
-	SDL_Texture* loadTexture(const char* path);
+	SDL_Surface* loadImage(const string path);
+	SDL_Renderer* getRenderer();
 
-	void blitSurface(SDL_Texture* texture);
+	void blitSurface(SDL_Texture* texture, SDL_Rect* source, SDL_Rect* dest);
 	void flip();
 	void clear();
 private:
