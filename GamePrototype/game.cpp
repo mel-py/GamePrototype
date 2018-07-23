@@ -15,7 +15,7 @@ Game::~Game() {}
 
 void Game::game_loop() {
 	Graphics graphics;
-	this->_testSprite = Sprite(this->_posx, this->_posy, 25, 30, 0, 5, "Sprites/link.png", graphics);
+	this->_testSprite = AnimatedSprite(this->_posx, this->_posy, 24, 32, 0, 0, "Sprites/link.png", graphics, 12);
 	SDL_Event e;
 
 	while (true) {
@@ -40,6 +40,8 @@ void Game::game_loop() {
 			}
 		}
 
+		Uint32 elapsedTime = SDL_GetTicks();
+		update(elapsedTime);
 		draw(graphics);
 	}
 }
@@ -48,4 +50,8 @@ void Game::draw(Graphics &graphics) {
 	graphics.clear();
 	this->_testSprite.draw(this->_posx, this->_posy, graphics);
 	graphics.flip();
+}
+
+void Game::update(Uint32 elapsedTime) {
+	this->_testSprite.update(elapsedTime);
 }

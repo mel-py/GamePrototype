@@ -16,7 +16,7 @@ public:
 	~Sprite();
 
 	void draw(int x, int y, Graphics &graphics);
-private:
+protected:
 	SDL_Texture* _sprite;
 	SDL_Rect _sourceRect;
 
