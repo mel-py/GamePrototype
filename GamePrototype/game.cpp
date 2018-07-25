@@ -15,7 +15,7 @@ Game::~Game() {}
 
 void Game::game_loop() {
 	Graphics graphics;
-	this->_testSprite = AnimatedSprite(this->_posx, this->_posy, 24, 32, 0, 0, "Sprites/link.png", graphics, 12);
+	this->_player = Player(this->_posx, this->_posy, "Sprites/link.png", graphics);
 	SDL_Event e;
 
 	while (true) {
@@ -25,18 +25,20 @@ void Game::game_loop() {
 			} else if (e.type == SDL_KEYDOWN) {
 				switch (e.key.keysym.sym) {
 				case SDLK_w:
-					this->_posy -= 2;
+					this->_player.movePlayer("backwards");
 					break;
 				case SDLK_s:
-					this->_posy += 2;
+					this->_player.movePlayer("forwards");
 					break;
 				case SDLK_a:
-					this->_posx -= 2;
+					this->_player.movePlayer("left");
 					break;
 				case SDLK_d:
-					this->_posx += 2;
+					this->_player.movePlayer("right");
 					break;
 				}
+			} else if (e.type == SDL_KEYUP) {
+				this->_player.stopMoving();
 			}
 		}
 
@@ -48,10 +50,10 @@ void Game::game_loop() {
 
 void Game::draw(Graphics &graphics) {
 	graphics.clear();
-	this->_testSprite.draw(this->_posx, this->_posy, graphics);
+	//this->_player.draw(graphics);
 	graphics.flip();
 }
 
 void Game::update(Uint32 elapsedTime) {
-	this->_testSprite.update(elapsedTime);
+	//this->_player.update(elapsedTime);
 }

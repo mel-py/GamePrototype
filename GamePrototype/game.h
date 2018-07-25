@@ -2,7 +2,7 @@
 #define GAME_H
 
 #include "graphics.h"
-#include "animatedSprite.h"
+#include "Player.h"
 
 class Game {
 public:
@@ -13,7 +13,7 @@ public:
 	void draw(Graphics &graphics);
 	void update(Uint32 elapsedTime);
 private:
-	AnimatedSprite _testSprite;
+	Player _player;
 
 	int _posx, _posy;
 };

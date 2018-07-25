@@ -2,7 +2,7 @@
 
 AnimatedSprite::AnimatedSprite() {};
 
-AnimatedSprite::AnimatedSprite(int x, int y, int width, int height, int sourceX, int sourceY, const string path, Graphics &graphics, int frames) :
+AnimatedSprite::AnimatedSprite(int x, int y, int width, int height, int sourceX, int sourceY, const string path, Graphics &graphics, int frames, int updateTime) :
 	Sprite(x, y, width, height, sourceX, sourceY, path, graphics) {
 	this->_numFrames = frames;
 	for (int i = 0; i < frames; i++) {
@@ -10,18 +10,29 @@ AnimatedSprite::AnimatedSprite(int x, int y, int width, int height, int sourceX,
 		this->_sourceRects.push_back(newSprite);
 	}
 
-	this->_timeToUpdate = 500;
+	this->_timeToUpdate = updateTime;
 	this->_lastUpdatedTime = 0;
 	this->_frame = 0;
 };
 
+void AnimatedSprite::stopAnimation() {
+	this->_playAnimation = false;
+	this->_frame = 0;
+}
+
+void AnimatedSprite::playAnimation() {
+	this->_playAnimation = true;
+}
+
 void AnimatedSprite::update(Uint32 elapsedTime) {
-	if (elapsedTime - this->_lastUpdatedTime > 1000) {
-		this->_frame++;
-		if (this->_frame >= this->_numFrames) {
-			this->_frame = 0;
+	if (this->_playAnimation) {
+		if (elapsedTime - this->_lastUpdatedTime > 1000) {
+			this->_frame++;
+			if (this->_frame >= this->_numFrames) {
+				this->_frame = 0;
+			}
+			this->_lastUpdatedTime = elapsedTime;
 		}
-		this->_lastUpdatedTime = elapsedTime;
 	}
 }
 
