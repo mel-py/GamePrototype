@@ -23,7 +23,9 @@ public:
 	void draw(Graphics &graphics);
 private:
 	map<Direction, AnimatedSprite> _sprites;
-	int _x, _y;
+	float _x, _y;
+	float _speed; //current speed of the character
+
 	Direction _direction; //current direction the player is facing
 };
 

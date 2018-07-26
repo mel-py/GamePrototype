@@ -1,5 +1,8 @@
 #include "player.h"
 
+const float ACCELERATION = 0.5f; //speed in which the character accelerates when movement starts
+const float MAX_SPEED = 6.0f; //maximum speed the character can reach
+
 Player::Player() {}
 
 Player::Player(int x, int y, string path, Graphics &graphics) {
@@ -18,23 +21,27 @@ Player::~Player() {}
 
 void Player::movePlayer(string direction) {
 		this->_sprites[this->_direction].playAnimation();
+		if (this->_speed < MAX_SPEED) {
+			this->_speed += ACCELERATION;
+		}
 		if (direction == "backwards") {
 			this->_direction = BACKWARD;
-			this->_y -= 4;
+			this->_y -= this->_speed;
 		} else if (direction == "forwards") {
 			this->_direction = FORWARD;
-			this->_y += 4;
+			this->_y += this->_speed;
 		} else if (direction == "left") {
 			this->_direction = LEFT;
-			this->_x -= 4;
+			this->_x -= this->_speed;
 		} else if (direction == "right") {
 			this->_direction = RIGHT;
-			this->_x += 4;
+			this->_x += this->_speed;
 		}
 }
 
 void Player::stopMoving() {
 	this->_sprites[this->_direction].stopAnimation();
+	this->_speed = 0;
 }
 
 void Player::update(Uint32 elapsedTime) {
