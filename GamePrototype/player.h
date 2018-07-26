@@ -8,6 +8,8 @@
 
 using namespace std;
 
+enum Direction { LEFT, RIGHT, BACKWARD, FORWARD };
+
 class Player {
 public:
 	Player();
@@ -20,9 +22,9 @@ public:
 	void update(Uint32 elapsedTime);
 	void draw(Graphics &graphics);
 private:
-	map<string, AnimatedSprite> _sprites;
+	map<Direction, AnimatedSprite> _sprites;
 	int _x, _y;
-	string _direction; //current direction the player is facing
+	Direction _direction; //current direction the player is facing
 };
 
 #endif

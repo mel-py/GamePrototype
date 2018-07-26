@@ -6,26 +6,29 @@ Player::Player(int x, int y, string path, Graphics &graphics) {
 	this->_x = x;
 	this->_y = y;
 
-	this->_sprites.insert(pair<string, AnimatedSprite>("backwards", AnimatedSprite(x, y, 24, 32, 0, 0, "Sprites/link.png", graphics, 12, 500)));
-	this->_sprites.insert(pair<string, AnimatedSprite>("right", AnimatedSprite(x, y, 24, 32, 0, 32, "Sprites/link.png", graphics, 12, 500)));
-	this->_sprites.insert(pair<string, AnimatedSprite>("forwards", AnimatedSprite(x, y, 24, 32, 0, 64, "Sprites/link.png", graphics, 12, 500)));
-	this->_sprites.insert(pair<string, AnimatedSprite>("left", AnimatedSprite(x, y, 24, 32, 0, 96, "Sprites/link.png", graphics, 12, 500)));
+	this->_sprites.insert(pair<Direction, AnimatedSprite>(BACKWARD, AnimatedSprite(x, y, 24, 32, 0, 0, "Sprites/link.png", graphics, 12, 500)));
+	this->_sprites.insert(pair<Direction, AnimatedSprite>(RIGHT, AnimatedSprite(x, y, 24, 32, 0, 32, "Sprites/link.png", graphics, 12, 500)));
+	this->_sprites.insert(pair<Direction, AnimatedSprite>(FORWARD, AnimatedSprite(x, y, 24, 32, 0, 64, "Sprites/link.png", graphics, 12, 500)));
+	this->_sprites.insert(pair<Direction, AnimatedSprite>(LEFT, AnimatedSprite(x, y, 24, 32, 0, 96, "Sprites/link.png", graphics, 12, 500)));
 
-	this->_direction = "forwards";
+	this->_direction = FORWARD;
 }
 
 Player::~Player() {}
 
 void Player::movePlayer(string direction) {
 		this->_sprites[this->_direction].playAnimation();
-		this->_direction = direction;
 		if (direction == "backwards") {
+			this->_direction = BACKWARD;
 			this->_y -= 4;
 		} else if (direction == "forwards") {
+			this->_direction = FORWARD;
 			this->_y += 4;
 		} else if (direction == "left") {
+			this->_direction = LEFT;
 			this->_x -= 4;
 		} else if (direction == "right") {
+			this->_direction = RIGHT;
 			this->_x += 4;
 		}
 }

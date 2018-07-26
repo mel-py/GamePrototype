@@ -16,6 +16,7 @@ Game::~Game() {}
 void Game::game_loop() {
 	Graphics graphics;
 	this->_player = Player(this->_posx, this->_posy, "Sprites/link.png", graphics);
+	this->_player.stopMoving();
 	SDL_Event e;
 
 	while (true) {
@@ -50,10 +51,10 @@ void Game::game_loop() {
 
 void Game::draw(Graphics &graphics) {
 	graphics.clear();
-	//this->_player.draw(graphics);
+	this->_player.draw(graphics);
 	graphics.flip();
 }
 
 void Game::update(Uint32 elapsedTime) {
-	//this->_player.update(elapsedTime);
+	this->_player.update(elapsedTime);
 }
