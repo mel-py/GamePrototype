@@ -127,6 +127,7 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="game.h" />
     <ClCompile Include="graphics.cpp" />
+    <ClCompile Include="inputManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="sprite.cpp" />

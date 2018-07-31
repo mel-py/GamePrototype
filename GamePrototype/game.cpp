@@ -1,4 +1,5 @@
 #include "game.h"
+#include "inputManager.h"
 #include <stdio.h>
 #include <SDL.h>
 
@@ -18,27 +19,35 @@ void Game::game_loop() {
 	this->_player = Player(this->_posx, this->_posy, "Sprites/link.png", graphics);
 	this->_player.stopMoving();
 	SDL_Event e;
+	InputManager input;
 
 	while (true) {
 		while (SDL_PollEvent(&e) != 0) {
 			if (e.type == SDL_QUIT) {
 				return;
 			} else if (e.type == SDL_KEYDOWN) {
-				switch (e.key.keysym.sym) {
-				case SDLK_w:
-					this->_player.movePlayer("backwards");
-					break;
-				case SDLK_s:
-					this->_player.movePlayer("forwards");
-					break;
-				case SDLK_a:
-					this->_player.movePlayer("left");
-					break;
-				case SDLK_d:
-					this->_player.movePlayer("right");
-					break;
-				}
+				input.KeyDownEvent(e);
 			} else if (e.type == SDL_KEYUP) {
+				input.KeyUpEvent(e);
+			}
+		}
+		if (input.isKeyDown(SDL_SCANCODE_ESCAPE) == true) {
+			return;
+		} else {
+			if (input.isKeyDown(SDL_SCANCODE_W) == true) {
+				this->_player.movePlayer("backwards");
+			} 
+			if (input.isKeyDown(SDL_SCANCODE_S) == true) {
+				this->_player.movePlayer("forwards");
+			} 
+			if (input.isKeyDown(SDL_SCANCODE_A) == true) {
+				this->_player.movePlayer("left");
+			} 
+			if (input.isKeyDown(SDL_SCANCODE_D) == true) {
+				this->_player.movePlayer("right");
+			}	
+			if (input.isKeyHeld(SDL_SCANCODE_W) == false && input.isKeyHeld(SDL_SCANCODE_S) == false
+				&& input.isKeyHeld(SDL_SCANCODE_A) == false && input.isKeyHeld(SDL_SCANCODE_D) == false) {
 				this->_player.stopMoving();
 			}
 		}

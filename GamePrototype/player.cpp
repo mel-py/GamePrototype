@@ -1,7 +1,7 @@
 #include "player.h"
 
-const float ACCELERATION = 0.5f; //speed in which the character accelerates when movement starts
-const float MAX_SPEED = 6.0f; //maximum speed the character can reach
+const float ACCELERATION = 0.001f; //speed in which the character accelerates when movement starts
+const float MAX_SPEED = 0.02f; //maximum speed the character can reach
 
 Player::Player() {}
 

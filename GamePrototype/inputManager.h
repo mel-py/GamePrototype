@@ -13,9 +13,9 @@ public:
 	void KeyUpEvent(SDL_Event& e);
 	void KeyDownEvent(SDL_Event& e);
 
-	bool isKeyDown(int key);
-	bool isKeyUp(int key);
-	bool isKeyHeld(int key);
+	bool isKeyDown(SDL_Scancode key);
+	bool isKeyUp(SDL_Scancode key);
+	bool isKeyHeld(SDL_Scancode key);
 private:
 	bool _keyDown[323];
 	bool _keyUp[323];
