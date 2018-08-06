@@ -3,6 +3,7 @@
 
 #include "graphics.h"
 #include "Player.h"
+#include "Map.h"
 
 class Game {
 public:
@@ -14,6 +15,8 @@ public:
 	void update(Uint32 elapsedTime);
 private:
 	Player _player;
+	Map _map;
+	Tile _testTile;
 
 	int _posx, _posy;
 };

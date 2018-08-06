@@ -1,7 +1,7 @@
 #include "player.h"
 
-const float ACCELERATION = 0.001f; //speed in which the character accelerates when movement starts
-const float MAX_SPEED = 0.02f; //maximum speed the character can reach
+const float ACCELERATION = 0.01f; //speed in which the character accelerates when movement starts
+const float MAX_SPEED = 0.05f; //maximum speed the character can reach
 
 Player::Player() {}
 
@@ -9,10 +9,10 @@ Player::Player(int x, int y, string path, Graphics &graphics) {
 	this->_x = x;
 	this->_y = y;
 
-	this->_sprites.insert(pair<Direction, AnimatedSprite>(BACKWARD, AnimatedSprite(x, y, 24, 32, 0, 0, "Sprites/link.png", graphics, 12, 500)));
-	this->_sprites.insert(pair<Direction, AnimatedSprite>(RIGHT, AnimatedSprite(x, y, 24, 32, 0, 32, "Sprites/link.png", graphics, 12, 500)));
-	this->_sprites.insert(pair<Direction, AnimatedSprite>(FORWARD, AnimatedSprite(x, y, 24, 32, 0, 64, "Sprites/link.png", graphics, 12, 500)));
-	this->_sprites.insert(pair<Direction, AnimatedSprite>(LEFT, AnimatedSprite(x, y, 24, 32, 0, 96, "Sprites/link.png", graphics, 12, 500)));
+	this->_sprites.insert(pair<Direction, AnimatedSprite>(BACKWARD, AnimatedSprite(x, y, 16, 16, 0, 0, path, graphics, 4, 100.0f)));
+	this->_sprites.insert(pair<Direction, AnimatedSprite>(RIGHT, AnimatedSprite(x, y, 16, 16, 0, 16, path, graphics, 4, 100.0f)));
+	this->_sprites.insert(pair<Direction, AnimatedSprite>(FORWARD, AnimatedSprite(x, y, 16, 16, 0, 32, path, graphics, 4, 100.0f)));
+	this->_sprites.insert(pair<Direction, AnimatedSprite>(LEFT, AnimatedSprite(x, y, 16, 16, 0, 48, path, graphics, 4, 100.0f)));
 
 	this->_direction = FORWARD;
 }

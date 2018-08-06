@@ -13,7 +13,7 @@ class AnimatedSprite : public Sprite {
 public:
 	AnimatedSprite();
 	//frames stores the number of frames in the animation
-	AnimatedSprite(int x, int y, int width, int height, int sourceX, int sourceY, const string path, Graphics &graphics, int frames, int updateTime);
+	AnimatedSprite(int x, int y, int width, int height, int sourceX, int sourceY, const string path, Graphics &graphics, int frames, float updateTime);
 
 	void stopAnimation();
 	void playAnimation();

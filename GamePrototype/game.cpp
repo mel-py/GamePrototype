@@ -2,7 +2,9 @@
 #include "inputManager.h"
 #include <stdio.h>
 #include <SDL.h>
-
+#include "map.h"
+#include "Vector2.h"
+#include <iostream>
 using namespace std;
 
 Game::Game() {
@@ -16,10 +18,11 @@ Game::~Game() {}
 
 void Game::game_loop() {
 	Graphics graphics;
-	this->_player = Player(this->_posx, this->_posy, "Sprites/link.png", graphics);
+	this->_player = Player(this->_posx, this->_posy, "Sprites/notlink.png", graphics);
 	this->_player.stopMoving();
 	SDL_Event e;
 	InputManager input;
+	this->_map = Map("Maps/map0.tmx", "Sprites/map1.png", 8, 13, graphics);
 
 	while (true) {
 		while (SDL_PollEvent(&e) != 0) {
@@ -60,6 +63,7 @@ void Game::game_loop() {
 
 void Game::draw(Graphics &graphics) {
 	graphics.clear();
+	this->_map.draw(graphics);
 	this->_player.draw(graphics);
 	graphics.flip();
 }

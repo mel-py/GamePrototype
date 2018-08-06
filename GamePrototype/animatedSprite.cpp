@@ -2,7 +2,7 @@
 
 AnimatedSprite::AnimatedSprite() {};
 
-AnimatedSprite::AnimatedSprite(int x, int y, int width, int height, int sourceX, int sourceY, const string path, Graphics &graphics, int frames, int updateTime) :
+AnimatedSprite::AnimatedSprite(int x, int y, int width, int height, int sourceX, int sourceY, const string path, Graphics &graphics, int frames, float updateTime) :
 	Sprite(x, y, width, height, sourceX, sourceY, path, graphics) {
 	this->_numFrames = frames;
 	for (int i = 0; i < frames; i++) {
@@ -26,7 +26,7 @@ void AnimatedSprite::playAnimation() {
 
 void AnimatedSprite::update(Uint32 elapsedTime) {
 	if (this->_playAnimation) {
-		if (elapsedTime - this->_lastUpdatedTime > 1000) {
+		if (elapsedTime - this->_lastUpdatedTime > this->_timeToUpdate) {
 			this->_frame++;
 			if (this->_frame >= this->_numFrames) {
 				this->_frame = 0;
