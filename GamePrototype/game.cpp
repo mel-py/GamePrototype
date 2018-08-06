@@ -9,8 +9,6 @@ using namespace std;
 
 Game::Game() {
 	SDL_Init(SDL_INIT_EVERYTHING);
-	this->_posx = 100;
-	this->_posy = 100;
 	game_loop();
 }
 
@@ -18,7 +16,7 @@ Game::~Game() {}
 
 void Game::game_loop() {
 	Graphics graphics;
-	this->_player = Player(this->_posx, this->_posy, "Sprites/notlink.png", graphics);
+	this->_player = Player(240, 320, "Sprites/notlink.png", graphics);
 	this->_player.stopMoving();
 	SDL_Event e;
 	InputManager input;
@@ -39,15 +37,19 @@ void Game::game_loop() {
 		} else {
 			if (input.isKeyDown(SDL_SCANCODE_W) == true) {
 				this->_player.movePlayer("backwards");
+				this->_map.updateOffset(0, 1);
 			} 
 			if (input.isKeyDown(SDL_SCANCODE_S) == true) {
 				this->_player.movePlayer("forwards");
+				this->_map.updateOffset(0, -1);
 			} 
 			if (input.isKeyDown(SDL_SCANCODE_A) == true) {
 				this->_player.movePlayer("left");
+				this->_map.updateOffset(1, 0);
 			} 
 			if (input.isKeyDown(SDL_SCANCODE_D) == true) {
 				this->_player.movePlayer("right");
+				this->_map.updateOffset(-1, 0);
 			}	
 			if (input.isKeyHeld(SDL_SCANCODE_W) == false && input.isKeyHeld(SDL_SCANCODE_S) == false
 				&& input.isKeyHeld(SDL_SCANCODE_A) == false && input.isKeyHeld(SDL_SCANCODE_D) == false) {

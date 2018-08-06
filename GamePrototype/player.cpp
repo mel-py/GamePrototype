@@ -21,21 +21,21 @@ Player::~Player() {}
 
 void Player::movePlayer(string direction) {
 		this->_sprites[this->_direction].playAnimation();
-		if (this->_speed < MAX_SPEED) {
+		/*if (this->_speed < MAX_SPEED) {
 			this->_speed += ACCELERATION;
-		}
+		}*/
 		if (direction == "backwards") {
 			this->_direction = BACKWARD;
-			this->_y -= this->_speed;
+			//this->_y -= this->_speed;
 		} else if (direction == "forwards") {
 			this->_direction = FORWARD;
-			this->_y += this->_speed;
+			//this->_y += this->_speed;
 		} else if (direction == "left") {
 			this->_direction = LEFT;
-			this->_x -= this->_speed;
+			//this->_x -= this->_speed;
 		} else if (direction == "right") {
 			this->_direction = RIGHT;
-			this->_x += this->_speed;
+			//this->_x += this->_speed;
 		}
 }
 

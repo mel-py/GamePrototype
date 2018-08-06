@@ -15,12 +15,14 @@ public:
 	Map(string fileNameMap, string fileNameTile, int tileSheetHeight, int tileSheetWidth, Graphics &graphics);
 	~Map();
 
+	void updateOffset(int mX, int mY);
 	void draw(Graphics &graphics);
 private:
 	string _mapName;
 	Vector2 _size; //size of the map
 	Vector2 _tileSize; //size of each tile
 	Vector2 _tileSheetSize;
+	
 	Vector2 _mapOffset; //position of all the tiles for screen scrolling
 
 	vector<Tile> _tiles;

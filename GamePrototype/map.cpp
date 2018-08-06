@@ -12,6 +12,7 @@ Map::Map(string fileNameMap, string fileNameTile, int tileSheetHeight, int tileS
 	this->_mapName = fileNameMap;
 	this->_tileset = SDL_CreateTextureFromSurface(graphics.getRenderer(), graphics.loadImage(fileNameTile));
 	this->_tileSheetSize = Vector2(tileSheetWidth, tileSheetHeight);
+	this->_mapOffset = Vector2(0, 0);
 	this->loadMap(graphics);
 }
 
@@ -87,8 +88,13 @@ void Map::loadMap(Graphics &graphics) {
 
 void Map::draw(Graphics &graphics) {
 	for (int i = 0; i < this->_tiles.size(); i++) {
-		this->_tiles.at(i).draw(graphics);
+		this->_tiles.at(i).draw(this->_mapOffset, graphics);
 	}
+}
+
+void Map::updateOffset(int changeX, int changeY) {
+	this->_mapOffset.x += changeX;
+	this->_mapOffset.y += changeY;
 }
 
 void Map::test() {
