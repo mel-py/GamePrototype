@@ -127,6 +127,7 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="game.h" />
     <ClCompile Include="graphics.cpp" />
+    <ClCompile Include="hitbox.cpp" />
     <ClCompile Include="inputManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
@@ -137,6 +138,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animatedSprite.h" />
+    <ClInclude Include="globals.h" />
+    <ClInclude Include="hitBox.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="inputManager.h" />

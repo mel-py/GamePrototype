@@ -5,6 +5,7 @@
 #include "map.h"
 #include "Vector2.h"
 #include <iostream>
+#include "globals.h"
 
 using namespace std;
 
@@ -39,28 +40,28 @@ void Game::game_loop() {
 			return;
 		} else {
 			if (input.isKeyDown(SDL_SCANCODE_W) == true) {
-				this->_player.movePlayer("backwards");
+				this->_player.movePlayer(BACKWARD);
 				offset = this->_map.updateOffset(0.0, 0.1, resolution, this->_player.getPlayerOffset());
 				if (offset == false) {
 					this->_player.updatePlayerOffset(0.0, -0.1);
 				}
 			} 
 			if (input.isKeyDown(SDL_SCANCODE_S) == true) {
-				this->_player.movePlayer("forwards");
+				this->_player.movePlayer(FORWARD);
 				offset = this->_map.updateOffset(0.0, -0.1, resolution, this->_player.getPlayerOffset());
 				if (offset == false) {
 					this->_player.updatePlayerOffset(0.0, 0.1);
 				}
 			} 
 			if (input.isKeyDown(SDL_SCANCODE_A) == true) {
-				this->_player.movePlayer("left");
+				this->_player.movePlayer(LEFT);
 				offset = this->_map.updateOffset(0.1, 0.0, resolution, this->_player.getPlayerOffset());
 				if (offset == false) {
 					this->_player.updatePlayerOffset(-0.1, 0.0);
 				}
 			} 
 			if (input.isKeyDown(SDL_SCANCODE_D) == true) {
-				this->_player.movePlayer("right");
+				this->_player.movePlayer(RIGHT);
 				offset = this->_map.updateOffset(-0.1, 0.0, resolution, this->_player.getPlayerOffset());
 				if (offset == false) {
 					this->_player.updatePlayerOffset(0.1, 0.0);

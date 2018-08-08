@@ -85,11 +85,29 @@ void Map::loadMap(Graphics &graphics) {
 		}
 		layer = layer->NextSiblingElement("layer");
 	}
+
+	//get the hitboxes for walls and stuff
+	XMLElement* objectGroup = mapNode->FirstChildElement("objectgroup");
+	while (objectGroup) {
+		XMLElement* object = objectGroup->FirstChildElement("object");
+		while (object) {
+			float x = object->IntAttribute("x");
+			float y = object->IntAttribute("y");
+			int width = object->IntAttribute("width");
+			int height = object->IntAttribute("height");
+			this->_hitBoxes.push_back(HitBox(x, y, width, height));
+			object = object->NextSiblingElement("object");
+		}
+		objectGroup = objectGroup->NextSiblingElement("objectgroup");
+	}
 }
 
 void Map::draw(Graphics &graphics) {
 	for (int i = 0; i < this->_tiles.size(); i++) {
 		this->_tiles.at(i).draw(this->_mapOffsetX, this->_mapOffsetY, graphics);
+	}
+	for (int i = 0; i < this->_hitBoxes.size(); i++) {
+		this->_hitBoxes.at(i).draw(graphics);
 	}
 }
 
@@ -136,6 +154,12 @@ bool Map::updateOffset(float mX, float mY, Vector2 resolution, Vector2 playerOff
 			return false;
 		}
 	}
+
+	//should only be called if false is not returned
+	for (int i = 0; i < this->_hitBoxes.size(); i++) {
+		this->_hitBoxes.at(i).moveBoxOffset(this->_mapOffsetX, this->_mapOffsetY);
+	}
+	return true;
 }
 
 void Map::test() {

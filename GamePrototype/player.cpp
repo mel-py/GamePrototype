@@ -14,34 +14,30 @@ Player::Player(int x, int y, string path, Graphics &graphics) {
 	this->_sprites.insert(pair<Direction, AnimatedSprite>(FORWARD, AnimatedSprite(x, y, 16, 16, 0, 32, path, graphics, 4, 100.0f)));
 	this->_sprites.insert(pair<Direction, AnimatedSprite>(LEFT, AnimatedSprite(x, y, 16, 16, 0, 48, path, graphics, 4, 100.0f)));
 
+	this->_hitBox = HitBox(x, y, 32, 32);
+
 	this->_direction = FORWARD;
 }
 
 Player::~Player() {}
 
-void Player::movePlayer(string direction) {
+void Player::movePlayer(Direction direction) {
 		this->_sprites[this->_direction].playAnimation();
-		/*if (this->_speed < MAX_SPEED) {
-			this->_speed += ACCELERATION;
-		}*/
-		if (direction == "backwards") {
+		if (direction == BACKWARD) {
 			this->_direction = BACKWARD;
-			//this->_y -= this->_speed;
-		} else if (direction == "forwards") {
+		} else if (direction == FORWARD) {
 			this->_direction = FORWARD;
-			//this->_y += this->_speed;
-		} else if (direction == "left") {
+		} else if (direction == LEFT) {
 			this->_direction = LEFT;
-			//this->_x -= this->_speed;
-		} else if (direction == "right") {
+		} else if (direction == RIGHT) {
 			this->_direction = RIGHT;
-			//this->_x += this->_speed;
 		}
 }
 
 void Player::updatePlayerOffset(float mX, float mY) {
 	this->_x += mX;
 	this->_y += mY;
+	this->_hitBox.moveBox(this->_x, this->_y);
 }
 
 Vector2 Player::getPlayerOffset() {
@@ -50,7 +46,6 @@ Vector2 Player::getPlayerOffset() {
 
 void Player::stopMoving() {
 	this->_sprites[this->_direction].stopAnimation();
-	this->_speed = 0;
 }
 
 void Player::update(Uint32 elapsedTime) {
@@ -59,4 +54,5 @@ void Player::update(Uint32 elapsedTime) {
 
 void Player::draw(Graphics &graphics) {
 	this->_sprites[this->_direction].draw(this->_x, this->_y, graphics);
+	this->_hitBox.draw(graphics);
 }

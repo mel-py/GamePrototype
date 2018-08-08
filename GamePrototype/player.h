@@ -6,10 +6,10 @@
 #include "Vector2.h"
 #include <map>
 #include <string>
+#include "globals.h"
+#include "hitBox.h"
 
 using namespace std;
-
-enum Direction { LEFT, RIGHT, BACKWARD, FORWARD };
 
 class Player {
 public:
@@ -17,7 +17,7 @@ public:
 	Player(int x, int y, string path, Graphics &graphics);
 	~Player();
 
-	void movePlayer(string direction);
+	void movePlayer(Direction direction);
 	void stopMoving();
 
 	void updatePlayerOffset(float mX, float mY);
@@ -28,7 +28,7 @@ public:
 private:
 	map<Direction, AnimatedSprite> _sprites;
 	float _x, _y;
-	float _speed; //current speed of the character
+	HitBox _hitBox;
 
 	Direction _direction; //current direction the player is facing
 };
