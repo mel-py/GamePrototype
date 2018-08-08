@@ -137,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animatedSprite.h" />
+    <ClInclude Include="Vector2.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="inputManager.h" />
     <ClInclude Include="map.h" />
@@ -144,7 +145,6 @@
     <ClInclude Include="sprite.h" />
     <ClInclude Include="tile.h" />
     <ClInclude Include="tinyxml2.h" />
-    <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Sprites\link.bmp" />

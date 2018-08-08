@@ -4,17 +4,20 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <string>
+#include "Vector2.h"
 
 using namespace std;
 
 class Graphics {
 public:
 	Graphics();
-	Graphics(int screenWidth, int screenHeight);
+	Graphics(int sWidth, int sHeight);
 	~Graphics();
 
 	SDL_Surface* loadImage(const string path);
 	SDL_Renderer* getRenderer();
+
+	Vector2 getResolution();
 
 	void blitSurface(SDL_Texture* texture, SDL_Rect* source, SDL_Rect* dest);
 	void flip();

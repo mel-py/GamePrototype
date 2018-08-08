@@ -17,7 +17,7 @@ Tile::Tile(SDL_Texture* tileSet, Vector2 size, Vector2 tilesetPosition, Vector2 
 
 Tile::~Tile() {}
 
-void Tile::draw(Vector2 offset, Graphics &graphics) {
-	SDL_Rect destRect = { this->_position.x + offset.x, this->_position.y + offset.y, this->_size.x, this->_size.y };
+void Tile::draw(float offsetX, float offsetY, Graphics &graphics) {
+	SDL_Rect destRect = { this->_position.x + offsetX, this->_position.y + offsetY, this->_size.x, this->_size.y };
 	graphics.blitSurface( this->_tileset, &this->_sourceRect, &destRect );
 }

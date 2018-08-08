@@ -3,6 +3,7 @@
 
 #include "animatedSprite.h"
 #include "graphics.h"
+#include "Vector2.h"
 #include <map>
 #include <string>
 
@@ -18,6 +19,9 @@ public:
 
 	void movePlayer(string direction);
 	void stopMoving();
+
+	void updatePlayerOffset(float mX, float mY);
+	Vector2 getPlayerOffset();
 
 	void update(Uint32 elapsedTime);
 	void draw(Graphics &graphics);

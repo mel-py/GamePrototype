@@ -39,6 +39,15 @@ void Player::movePlayer(string direction) {
 		}
 }
 
+void Player::updatePlayerOffset(float mX, float mY) {
+	this->_x += mX;
+	this->_y += mY;
+}
+
+Vector2 Player::getPlayerOffset() {
+	return Vector2(this->_x, this->_y);
+}
+
 void Player::stopMoving() {
 	this->_sprites[this->_direction].stopAnimation();
 	this->_speed = 0;

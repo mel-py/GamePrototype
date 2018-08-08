@@ -2,10 +2,10 @@
 #include <iostream>
 
 Graphics::Graphics() {
-	this->_screenWidth = 480;
-	this->_screenHeight = 640;
+	this->_screenWidth = 420;
+	this->_screenHeight = 680;
 
-	this->_window = SDL_CreateWindow("Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->_screenWidth, this->_screenHeight, SDL_WINDOW_SHOWN);
+	this->_window = SDL_CreateWindow("Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 420, 680, SDL_WINDOW_SHOWN);
 	if (this->_window == NULL) {
 		cout << "Window could not be initialized, " << SDL_GetError() << endl;
 	} else {
@@ -22,11 +22,11 @@ Graphics::Graphics() {
 	}
 }
 
-Graphics::Graphics(int screenWidth, int screenHeight) {
-	this->_screenWidth = screenWidth;
-	this->_screenHeight = screenHeight;
+Graphics::Graphics(int sWidth, int sHeight) {
+	this->_screenHeight = sHeight;
+	this->_screenWidth = sWidth;
 
-	this->_window = SDL_CreateWindow("Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->_screenWidth, this->_screenHeight, SDL_WINDOW_SHOWN);
+	this->_window = SDL_CreateWindow("Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, sWidth, sHeight, SDL_WINDOW_SHOWN);
 	if (this->_window == NULL) {
 		cout << "Window could not be initialized, " << SDL_GetError() << endl;
 	} else {
@@ -55,6 +55,10 @@ SDL_Surface* Graphics::loadImage(const string path) {
 	}
 
 	return loadedSurface;
+}
+
+Vector2 Graphics::getResolution() {
+	return Vector2(this->_screenWidth, this->_screenHeight);
 }
 
 SDL_Renderer* Graphics::getRenderer() {

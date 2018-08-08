@@ -5,6 +5,7 @@
 #include "map.h"
 #include "Vector2.h"
 #include <iostream>
+
 using namespace std;
 
 Game::Game() {
@@ -16,11 +17,13 @@ Game::~Game() {}
 
 void Game::game_loop() {
 	Graphics graphics;
-	this->_player = Player(240, 320, "Sprites/notlink.png", graphics);
+	Vector2 resolution = graphics.getResolution();
+	this->_player = Player(resolution.x / 2, resolution.y / 2, "Sprites/notlink.png", graphics);
 	this->_player.stopMoving();
 	SDL_Event e;
 	InputManager input;
 	this->_map = Map("Maps/map0.tmx", "Sprites/map1.png", 8, 13, graphics);
+	bool offset; //false if the map offset is not able to move but a button is pressed
 
 	while (true) {
 		while (SDL_PollEvent(&e) != 0) {
@@ -37,19 +40,31 @@ void Game::game_loop() {
 		} else {
 			if (input.isKeyDown(SDL_SCANCODE_W) == true) {
 				this->_player.movePlayer("backwards");
-				this->_map.updateOffset(0, 1);
+				offset = this->_map.updateOffset(0.0, 0.1, resolution, this->_player.getPlayerOffset());
+				if (offset == false) {
+					this->_player.updatePlayerOffset(0.0, -0.1);
+				}
 			} 
 			if (input.isKeyDown(SDL_SCANCODE_S) == true) {
 				this->_player.movePlayer("forwards");
-				this->_map.updateOffset(0, -1);
+				offset = this->_map.updateOffset(0.0, -0.1, resolution, this->_player.getPlayerOffset());
+				if (offset == false) {
+					this->_player.updatePlayerOffset(0.0, 0.1);
+				}
 			} 
 			if (input.isKeyDown(SDL_SCANCODE_A) == true) {
 				this->_player.movePlayer("left");
-				this->_map.updateOffset(1, 0);
+				offset = this->_map.updateOffset(0.1, 0.0, resolution, this->_player.getPlayerOffset());
+				if (offset == false) {
+					this->_player.updatePlayerOffset(-0.1, 0.0);
+				}
 			} 
 			if (input.isKeyDown(SDL_SCANCODE_D) == true) {
 				this->_player.movePlayer("right");
-				this->_map.updateOffset(-1, 0);
+				offset = this->_map.updateOffset(-0.1, 0.0, resolution, this->_player.getPlayerOffset());
+				if (offset == false) {
+					this->_player.updatePlayerOffset(0.1, 0.0);
+				}
 			}	
 			if (input.isKeyHeld(SDL_SCANCODE_W) == false && input.isKeyHeld(SDL_SCANCODE_S) == false
 				&& input.isKeyHeld(SDL_SCANCODE_A) == false && input.isKeyHeld(SDL_SCANCODE_D) == false) {

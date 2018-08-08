@@ -12,7 +12,8 @@ Map::Map(string fileNameMap, string fileNameTile, int tileSheetHeight, int tileS
 	this->_mapName = fileNameMap;
 	this->_tileset = SDL_CreateTextureFromSurface(graphics.getRenderer(), graphics.loadImage(fileNameTile));
 	this->_tileSheetSize = Vector2(tileSheetWidth, tileSheetHeight);
-	this->_mapOffset = Vector2(0, 0);
+	this->_mapOffsetX = 0;
+	this->_mapOffsetY = 0;
 	this->loadMap(graphics);
 }
 
@@ -88,13 +89,53 @@ void Map::loadMap(Graphics &graphics) {
 
 void Map::draw(Graphics &graphics) {
 	for (int i = 0; i < this->_tiles.size(); i++) {
-		this->_tiles.at(i).draw(this->_mapOffset, graphics);
+		this->_tiles.at(i).draw(this->_mapOffsetX, this->_mapOffsetY, graphics);
 	}
 }
 
-void Map::updateOffset(int changeX, int changeY) {
-	this->_mapOffset.x += changeX;
-	this->_mapOffset.y += changeY;
+//update the offset from screen scrolling
+//we want to stop screen scrolling when the edges of the map are reached
+//return false if the offset can't be updated
+bool Map::updateOffset(float mX, float mY, Vector2 resolution, Vector2 playerOffset) {
+	//check if the edge of the screen is reached in the x direction
+	if (mX != 0) {
+		if (playerOffset.x != resolution.x / 2) {
+			return false;
+		}
+		if (0 >= this->_mapOffsetX) {
+			if (((this->_size.x * this->_tileSize.x) - resolution.x) * -1 <= this->_mapOffsetX) {
+				this->_mapOffsetX += mX;
+			} else if (mX > 0) { // unstick from the side
+				this->_mapOffsetX += mX;
+			} else {
+				return false;
+			}
+		} else if (mX < 0) { //unstick again
+			this->_mapOffsetX += mX;
+		} else {
+			return false;
+		}
+	}
+
+	//check in the y direction
+	if (mY != 0) {
+		if (playerOffset.y != resolution.y / 2) {
+			return false;
+		}
+		if (0 >= this->_mapOffsetY) {
+			if (((this->_size.y * this->_tileSize.y) - resolution.y) * -1 <= this->_mapOffsetY) {
+				this->_mapOffsetY += mY;
+			} else if (mY > 0) { // unstick from the side
+				this->_mapOffsetY += mY;
+			} else {
+				return false;
+			}
+		} else if (mY < 0) { //unstick again
+			this->_mapOffsetY += mY;
+		} else {
+			return false;
+		}
+	}
 }
 
 void Map::test() {

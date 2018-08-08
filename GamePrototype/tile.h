@@ -11,7 +11,7 @@ public:
 	Tile(SDL_Texture* tileset, Vector2 size, Vector2 tilesetPosition, Vector2 position);
 	~Tile();
 
-	void draw(Vector2 offset, Graphics &graphics);
+	void draw(float offsetX, float offsetY, Graphics &graphics);
 private:
 	//position is the position of the tile on the screen
 	//tilesetPosition is the position of the tile on the tileset

@@ -18,7 +18,10 @@ private:
 	Map _map;
 	Tile _testTile;
 
-	int _posx, _posy;
+	int _mapOffsetX, _mapOffsetY;
+	Vector2 _mapSize;
+
+	void moveOffset(Vector2 resolution, float mX, float mY);
 };
 
 #endif
