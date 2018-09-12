@@ -162,6 +162,15 @@ bool Map::updateOffset(float mX, float mY, Vector2 resolution, Vector2 playerOff
 	return true;
 }
 
+bool Map::checkCollisions(HitBox box) {
+	for (int i = 0; i < this->_hitBoxes.size(); i++) {
+		if (this->_hitBoxes.at(i).checkCollision(box)) {
+			return true;
+		}
+	}
+	return false;
+}
+
 void Map::test() {
 	XMLDocument doc;
 	doc.LoadFile(this->_mapName.c_str());

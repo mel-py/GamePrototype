@@ -4,6 +4,8 @@
 #include "graphics.h"
 #include "Player.h"
 #include "Map.h"
+#include <vector>
+#include "enemy.h"
 
 class Game {
 public:
@@ -12,16 +14,15 @@ public:
 
 	void game_loop();
 	void draw(Graphics &graphics);
-	void update(Uint32 elapsedTime);
+	void update(Uint32 elapsedTime, Graphics &graphics);
 private:
 	Player _player;
+	vector<Enemy> _enemies;
 	Map _map;
 	Tile _testTile;
 
 	int _mapOffsetX, _mapOffsetY;
 	Vector2 _mapSize;
-
-	void moveOffset(Vector2 resolution, float mX, float mY);
 };
 
 #endif

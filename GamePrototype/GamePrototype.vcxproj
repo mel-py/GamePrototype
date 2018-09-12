@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="animatedSprite.cpp" />
+    <ClCompile Include="enemy.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="game.h" />
     <ClCompile Include="graphics.cpp" />
@@ -138,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animatedSprite.h" />
+    <ClInclude Include="enemy.h" />
     <ClInclude Include="globals.h" />
     <ClInclude Include="hitBox.h" />
     <ClInclude Include="Vector2.h" />
@@ -153,6 +155,7 @@
     <Image Include="Sprites\link.bmp" />
     <Image Include="Sprites\link.jpg" />
     <Image Include="Sprites\map1.png" />
+    <Image Include="Sprites\smushroom.png" />
     <Image Include="Sprites\test.bmp" />
     <Image Include="Sprites\test.png" />
   </ItemGroup>

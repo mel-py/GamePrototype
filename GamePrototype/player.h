@@ -23,6 +23,11 @@ public:
 	void updatePlayerOffset(float mX, float mY);
 	Vector2 getPlayerOffset();
 
+	HitBox getHitBox();
+	Direction* getDirection();
+
+	void beginNewFrame();
+
 	void update(Uint32 elapsedTime);
 	void draw(Graphics &graphics);
 private:
@@ -30,7 +35,12 @@ private:
 	float _x, _y;
 	HitBox _hitBox;
 
-	Direction _direction; //current direction the player is facing
+	Direction _directions[2]; //since the player can move in two directions at once store it as a 2d array
+	/*
+	Since the player can move in two directions at once (i.e. forward and left) we need to know if the first or second direction
+	in the array has been updated last (i.e. forward was already stored in the array so store left in the second array element)
+	*/
+	int _directionIndex;
 };
 
 #endif

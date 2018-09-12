@@ -4,6 +4,7 @@
 #include "Vector2.h"
 #include "graphics.h"
 #include <SDL.h>
+#include "globals.h"
 
 class HitBox {
 public:
@@ -13,6 +14,10 @@ public:
 
 	void moveBox(float mX, float mY);
 	void moveBoxOffset(float offsetX, float offsetY);
+
+	Vector2 getSize();
+	Vector2 getPosition();
+	Vector2 getOffset();
 
 	bool checkCollision(HitBox box);
 

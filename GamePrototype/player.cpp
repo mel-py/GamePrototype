@@ -16,22 +16,24 @@ Player::Player(int x, int y, string path, Graphics &graphics) {
 
 	this->_hitBox = HitBox(x, y, 32, 32);
 
-	this->_direction = FORWARD;
+	this->_directions[0] = FORWARD;
+	this->_directions[1] = NONE;
 }
 
 Player::~Player() {}
 
 void Player::movePlayer(Direction direction) {
-		this->_sprites[this->_direction].playAnimation();
-		if (direction == BACKWARD) {
-			this->_direction = BACKWARD;
-		} else if (direction == FORWARD) {
-			this->_direction = FORWARD;
-		} else if (direction == LEFT) {
-			this->_direction = LEFT;
-		} else if (direction == RIGHT) {
-			this->_direction = RIGHT;
-		}
+	this->_sprites[this->_directions[0]].playAnimation();
+	if (this->_directionIndex < 2) {
+		this->_directions[this->_directionIndex] = direction;
+		this->_directionIndex++;
+	}
+		
+}
+
+void Player::beginNewFrame() {
+	this->_directionIndex = 0;
+	this->_directions[1] = NONE;
 }
 
 void Player::updatePlayerOffset(float mX, float mY) {
@@ -45,14 +47,22 @@ Vector2 Player::getPlayerOffset() {
 }
 
 void Player::stopMoving() {
-	this->_sprites[this->_direction].stopAnimation();
+	this->_sprites[this->_directions[0]].stopAnimation();
+}
+
+HitBox Player::getHitBox() {
+	return this->_hitBox;
+}
+
+Direction* Player::getDirection() {
+	return this->_directions;
 }
 
 void Player::update(Uint32 elapsedTime) {
-	this->_sprites[this->_direction].update(elapsedTime);
+	this->_sprites[this->_directions[0]].update(elapsedTime);
 }
 
 void Player::draw(Graphics &graphics) {
-	this->_sprites[this->_direction].draw(this->_x, this->_y, graphics);
+	this->_sprites[this->_directions[0]].draw(this->_x, this->_y, graphics);
 	this->_hitBox.draw(graphics);
 }

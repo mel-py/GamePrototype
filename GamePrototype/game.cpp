@@ -21,6 +21,7 @@ void Game::game_loop() {
 	Vector2 resolution = graphics.getResolution();
 	this->_player = Player(resolution.x / 2, resolution.y / 2, "Sprites/notlink.png", graphics);
 	this->_player.stopMoving();
+	this->_enemies.push_back(Enemy(0, 0, 16, 16, 0, 0, "Sprites/smushroom.png", graphics));
 	SDL_Event e;
 	InputManager input;
 	this->_map = Map("Maps/map0.tmx", "Sprites/map1.png", 8, 13, graphics);
@@ -39,6 +40,7 @@ void Game::game_loop() {
 		if (input.isKeyDown(SDL_SCANCODE_ESCAPE) == true) {
 			return;
 		} else {
+			this->_player.beginNewFrame();
 			if (input.isKeyDown(SDL_SCANCODE_W) == true) {
 				this->_player.movePlayer(BACKWARD);
 				offset = this->_map.updateOffset(0.0, 0.1, resolution, this->_player.getPlayerOffset());
@@ -66,7 +68,7 @@ void Game::game_loop() {
 				if (offset == false) {
 					this->_player.updatePlayerOffset(0.1, 0.0);
 				}
-			}	
+			} 
 			if (input.isKeyHeld(SDL_SCANCODE_W) == false && input.isKeyHeld(SDL_SCANCODE_S) == false
 				&& input.isKeyHeld(SDL_SCANCODE_A) == false && input.isKeyHeld(SDL_SCANCODE_D) == false) {
 				this->_player.stopMoving();
@@ -74,7 +76,7 @@ void Game::game_loop() {
 		}
 
 		Uint32 elapsedTime = SDL_GetTicks();
-		update(elapsedTime);
+		update(elapsedTime, graphics);
 		draw(graphics);
 	}
 }
@@ -83,9 +85,43 @@ void Game::draw(Graphics &graphics) {
 	graphics.clear();
 	this->_map.draw(graphics);
 	this->_player.draw(graphics);
+	for (int i = 0; i < this->_enemies.size(); i++) {
+		this->_enemies.at(i).draw(graphics);
+	}
 	graphics.flip();
 }
 
-void Game::update(Uint32 elapsedTime) {
+void Game::update(Uint32 elapsedTime, Graphics &graphics) {
 	this->_player.update(elapsedTime);
+
+	bool collision = this->_map.checkCollisions(this->_player.getHitBox());
+	if (collision) {
+		Direction *direcs = this->_player.getDirection();
+		for (int i = 0; i < 2; i++) {
+			switch (direcs[i]) {
+			case (BACKWARD):
+				if (!this->_map.updateOffset(0.0, -0.1, graphics.getResolution(), this->_player.getPlayerOffset())) {
+					this->_player.updatePlayerOffset(0.0, 0.1);
+				}
+				break;
+			case (FORWARD):
+				if (!this->_map.updateOffset(0.0, 0.1, graphics.getResolution(), this->_player.getPlayerOffset())) {
+					this->_player.updatePlayerOffset(0.0, -0.1);
+				}
+				break;
+			case (LEFT):
+				if (!this->_map.updateOffset(-0.1, 0.0, graphics.getResolution(), this->_player.getPlayerOffset())) {
+					this->_player.updatePlayerOffset(0.1, 0.0);
+				}
+				break;
+			case (RIGHT):
+				if (!this->_map.updateOffset(0.1, 0.0, graphics.getResolution(), this->_player.getPlayerOffset())) {
+					this->_player.updatePlayerOffset(-0.1, 0.0);
+				}
+				break;
+			case (NONE):
+				break;
+			}
+		}
+	}
 }
