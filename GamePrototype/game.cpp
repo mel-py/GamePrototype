@@ -21,7 +21,7 @@ void Game::game_loop() {
 	Vector2 resolution = graphics.getResolution();
 	this->_player = Player(resolution.x / 2, resolution.y / 2, "Sprites/notlink.png", graphics);
 	this->_player.stopMoving();
-	this->_enemies.push_back(Enemy(0, 0, 16, 16, 0, 0, "Sprites/smushroom.png", graphics));
+	this->_enemies.push_back(Enemy(10, 10, 0, 0, 16, 16, "Sprites/smushroom.png", graphics));
 	SDL_Event e;
 	InputManager input;
 	this->_map = Map("Maps/map0.tmx", "Sprites/map1.png", 8, 13, graphics);
