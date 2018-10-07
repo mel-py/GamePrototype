@@ -5,7 +5,7 @@
 #include "Player.h"
 #include "Map.h"
 #include <vector>
-#include "enemy.h"
+#include "slime.h"
 
 class Game {
 public:
@@ -17,7 +17,7 @@ public:
 	void update(Uint32 elapsedTime, Graphics &graphics);
 private:
 	Player _player;
-	vector<Enemy> _enemies;
+	Slime _enemies;
 	Map _map;
 	Tile _testTile;
 

@@ -21,7 +21,7 @@ void Game::game_loop() {
 	Vector2 resolution = graphics.getResolution();
 	this->_player = Player(resolution.x / 2, resolution.y / 2, "Sprites/notlink.png", graphics);
 	this->_player.stopMoving();
-	this->_enemies.push_back(Enemy(10, 10, 0, 0, 16, 16, "Sprites/smushroom.png", graphics));
+	this->_enemies = Slime(10, 10, 0, 0, 16, 16, "Sprites/smushroom.png", graphics);
 	SDL_Event e;
 	InputManager input;
 	this->_map = Map("Maps/map0.tmx", "Sprites/map1.png", 8, 13, graphics);
@@ -85,14 +85,13 @@ void Game::draw(Graphics &graphics) {
 	graphics.clear();
 	this->_map.draw(graphics);
 	this->_player.draw(graphics);
-	for (int i = 0; i < this->_enemies.size(); i++) {
-		this->_enemies.at(i).draw(graphics);
-	}
+	this->_enemies.draw(graphics);
 	graphics.flip();
 }
 
 void Game::update(Uint32 elapsedTime, Graphics &graphics) {
 	this->_player.update(elapsedTime);
+	this->_enemies.update(elapsedTime);
 
 	bool collision = this->_map.checkCollisions(this->_player.getHitBox());
 	if (collision) {

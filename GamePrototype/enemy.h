@@ -2,8 +2,8 @@
 #define ENEMY_H
 
 #include "graphics.h"
-#include "hitBox.h"
 #include "sprite.h"
+#include "globals.h"
 
 using namespace std;
 
@@ -22,8 +22,8 @@ public:
 private:
 	Sprite _sprite;
 
+	Direction _direction;
 	float _x, _y;
-	HitBox _hitbox;
 };
 
 #endif
