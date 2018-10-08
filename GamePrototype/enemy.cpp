@@ -14,6 +14,11 @@ Enemy::~Enemy() {}
 
 void Enemy::AI() {}
 
+void Enemy::updateOffset(float mX, float mY) {
+	this->_x += mX;
+	this->_y += mY;
+}
+
 void Enemy::draw(Graphics &graphics) {
 	this->_sprite.draw(this->_x, this->_y, graphics);
 }

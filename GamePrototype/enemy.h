@@ -16,9 +16,10 @@ public:
 	//AI that decides the enemy's movement
 	void AI();
 
+	void updateOffset(float mX, float mY);
+
 	void draw(Graphics &graphics);
 	void update(Uint32 elapsedTime);
-
 private:
 	Sprite _sprite;
 

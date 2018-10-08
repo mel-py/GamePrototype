@@ -21,7 +21,7 @@ void Game::game_loop() {
 	Vector2 resolution = graphics.getResolution();
 	this->_player = Player(resolution.x / 2, resolution.y / 2, "Sprites/notlink.png", graphics);
 	this->_player.stopMoving();
-	this->_enemies = Slime(10, 10, 0, 0, 16, 16, "Sprites/smushroom.png", graphics);
+	this->_enemies = Slime(150, 50, 0, 0, 16, 16, "Sprites/smushroom.png", graphics);
 	SDL_Event e;
 	InputManager input;
 	this->_map = Map("Maps/map0.tmx", "Sprites/map1.png", 8, 13, graphics);
@@ -46,6 +46,8 @@ void Game::game_loop() {
 				offset = this->_map.updateOffset(0.0, 0.1, resolution, this->_player.getPlayerOffset());
 				if (offset == false) {
 					this->_player.updatePlayerOffset(0.0, -0.1);
+				} else if (offset == true) {
+					this->_enemies.updateOffset(0.0, 0.1);
 				}
 			} 
 			if (input.isKeyDown(SDL_SCANCODE_S) == true) {
@@ -53,6 +55,8 @@ void Game::game_loop() {
 				offset = this->_map.updateOffset(0.0, -0.1, resolution, this->_player.getPlayerOffset());
 				if (offset == false) {
 					this->_player.updatePlayerOffset(0.0, 0.1);
+				} else if (offset == true) {
+					this->_enemies.updateOffset(0.0, -0.1);
 				}
 			} 
 			if (input.isKeyDown(SDL_SCANCODE_A) == true) {
@@ -60,6 +64,8 @@ void Game::game_loop() {
 				offset = this->_map.updateOffset(0.1, 0.0, resolution, this->_player.getPlayerOffset());
 				if (offset == false) {
 					this->_player.updatePlayerOffset(-0.1, 0.0);
+				} else if (offset == true) {
+					this->_enemies.updateOffset(0.1, 0.0);
 				}
 			} 
 			if (input.isKeyDown(SDL_SCANCODE_D) == true) {
@@ -67,6 +73,8 @@ void Game::game_loop() {
 				offset = this->_map.updateOffset(-0.1, 0.0, resolution, this->_player.getPlayerOffset());
 				if (offset == false) {
 					this->_player.updatePlayerOffset(0.1, 0.0);
+				} else if (offset == true) {
+					this->_enemies.updateOffset(-0.1, 0.0);
 				}
 			} 
 			if (input.isKeyHeld(SDL_SCANCODE_W) == false && input.isKeyHeld(SDL_SCANCODE_S) == false
@@ -122,5 +130,9 @@ void Game::update(Uint32 elapsedTime, Graphics &graphics) {
 				break;
 			}
 		}
+	}
+	collision = this->_map.checkCollisions(this->_enemies.getHitBox());
+	if (collision) {
+		this->_enemies.handleCollision();
 	}
 }

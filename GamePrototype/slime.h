@@ -14,18 +14,21 @@ public:
 	~Slime();
 
 	void AI();
-	void move();
+	void handleCollision();
+	void updateOffset(float mX, float mY);
 
 	void draw(Graphics &graphics);
 	void update(Uint32 elapsedTime);
-private:
 
+	HitBox getHitBox();
+private:
 	Direction _direction;
 
 	Sprite _sprite;
 	HitBox _hitBox;
 
 	float _x, _y;
+	float _mX, _mY; //offset
 };
 
 #endif
