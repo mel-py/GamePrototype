@@ -35,6 +35,8 @@ private:
 	float _x, _y;
 	HitBox _hitBox;
 
+	int _health; //total health of the player
+
 	Direction _directions[2]; //since the player can move in two directions at once store it as a 2d array
 	/*
 	Since the player can move in two directions at once (i.e. forward and left) we need to know if the first or second direction

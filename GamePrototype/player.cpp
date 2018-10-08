@@ -18,6 +18,8 @@ Player::Player(int x, int y, string path, Graphics &graphics) {
 
 	this->_directions[0] = FORWARD;
 	this->_directions[1] = NONE;
+
+	this->_health = 100;
 }
 
 Player::~Player() {}
@@ -65,4 +67,10 @@ void Player::update(Uint32 elapsedTime) {
 void Player::draw(Graphics &graphics) {
 	this->_sprites[this->_directions[0]].draw(this->_x, this->_y, graphics);
 	this->_hitBox.draw(graphics);
+
+	//draw the health bar
+	SDL_Rect rectToDraw = { 75, 600, this->_health * 2, 50 };
+	SDL_SetRenderDrawColor(graphics.getRenderer(), 255, 0, 0, 0);
+	SDL_RenderFillRect(graphics.getRenderer(), &rectToDraw);
+	SDL_RenderDrawRect(graphics.getRenderer(), &rectToDraw);
 }
