@@ -20,6 +20,10 @@ public:
 	void movePlayer(Direction direction);
 	void stopMoving();
 
+	void attack();
+	void stopAttacking();
+	bool isAttacking();
+
 	void updatePlayerOffset(float mX, float mY);
 	Vector2 getPlayerOffset();
 
@@ -28,6 +32,8 @@ public:
 
 	void beginNewFrame();
 
+	void updateHealth(signed int amountToAdd);
+
 	void update(Uint32 elapsedTime);
 	void draw(Graphics &graphics);
 private:
@@ -35,7 +41,10 @@ private:
 	float _x, _y;
 	HitBox _hitBox;
 
+	bool _isAttacking;
+
 	int _health; //total health of the player
+	int _energy; //total energy of the player
 
 	Direction _directions[2]; //since the player can move in two directions at once store it as a 2d array
 	/*

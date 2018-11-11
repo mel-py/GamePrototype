@@ -11,6 +11,7 @@ Slime::Slime(int x, int y, int posX, int posY, int height, int width, string pat
 	this->_hitBox = HitBox(x, y, width * 2, height * 2);
 
 	this->_direction = FORWARD;
+	this->_health = 10;
 }
 
 Slime::~Slime() {}
@@ -42,6 +43,14 @@ void Slime::handleCollision() {
 	case (RIGHT) :
 		this->_direction = RIGHT;
 		break;
+	}
+}
+
+void Slime::updateHealth(signed int amntToUpdate) {
+	this->_health += amntToUpdate;
+	if (this->_health <= 0) {
+		this->_x = -100;
+		this->_y = -100;
 	}
 }
 

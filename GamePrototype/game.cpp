@@ -77,9 +77,12 @@ void Game::game_loop() {
 					this->_enemies.updateOffset(-0.1, 0.0);
 				}
 			} 
-			if (input.isKeyHeld(SDL_SCANCODE_W) == false && input.isKeyHeld(SDL_SCANCODE_S) == false
-				&& input.isKeyHeld(SDL_SCANCODE_A) == false && input.isKeyHeld(SDL_SCANCODE_D) == false) {
+			if (input.isKeyDown(SDL_SCANCODE_W) == false && input.isKeyDown(SDL_SCANCODE_S) == false
+				&& input.isKeyDown(SDL_SCANCODE_A) == false && input.isKeyDown(SDL_SCANCODE_D) == false) {
 				this->_player.stopMoving();
+			}
+			if (input.isKeyDown(SDL_SCANCODE_SPACE) == true) {
+				this->_player.attack();
 			}
 		}
 
@@ -134,5 +137,12 @@ void Game::update(Uint32 elapsedTime, Graphics &graphics) {
 	collision = this->_map.checkCollisions(this->_enemies.getHitBox());
 	if (collision) {
 		this->_enemies.handleCollision();
+	}
+	if (this->_player.getHitBox().checkCollision(this->_enemies.getHitBox())) {
+		if (this->_player.isAttacking()) {
+			this->_enemies.updateHealth(-10);
+		} else if (elapsedTime % 500 == 0) {
+			this->_player.updateHealth(-1);
+		}
 	}
 }
