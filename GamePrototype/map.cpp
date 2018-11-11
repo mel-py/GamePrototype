@@ -162,14 +162,15 @@ bool Map::updateOffset(float mX, float mY, Vector2 resolution, Vector2 playerOff
 	return true;
 }
 
-Direction Map::checkCollisions(HitBox box) {
+vector <Direction> Map::checkCollisions(HitBox box) {
+	vector <Direction> collisions;
 	for (int i = 0; i < this->_hitBoxes.size(); i++) {
 		Direction direc = this->_hitBoxes.at(i).checkCollision(box);
 		if (direc != NONE) {
-			return direc;
+			collisions.push_back(direc);
 		}
 	}
-	return NONE;
+	return collisions;
 }
 
 void Map::test() {

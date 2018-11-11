@@ -104,9 +104,10 @@ void Game::update(Uint32 elapsedTime, Graphics &graphics) {
 	this->_player.update(elapsedTime);
 	this->_enemies.update(elapsedTime);
 
-	Direction collision = this->_map.checkCollisions(this->_player.getHitBox());
-	if (collision != NONE) {
-		switch (collision) {
+	vector <Direction> collision = this->_map.checkCollisions(this->_player.getHitBox());
+	if (collision.size() > 0) {
+		for (int i = 0; i < collision.size(); i++) {
+			switch (collision[i]) {
 			case (BACKWARD):
 				if (!this->_map.updateOffset(0.0, -0.1, graphics.getResolution(), this->_player.getPlayerOffset())) {
 					this->_player.updatePlayerOffset(0.0, 0.1);
@@ -127,11 +128,12 @@ void Game::update(Uint32 elapsedTime, Graphics &graphics) {
 					this->_player.updatePlayerOffset(-0.1, 0.0);
 				}
 				break;
+			}
 		}
 	}
 	collision = this->_map.checkCollisions(this->_enemies.getHitBox());
-	if (collision != NONE) {
-		this->_enemies.handleCollision(collision);
+	if (collision.size() > 0) {
+		this->_enemies.handleCollision(collision[0]);
 	}
 	if (this->_player.getHitBox().checkCollision(this->_enemies.getHitBox()) != NONE) {
 		if (this->_player.isAttacking()) {
