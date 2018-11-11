@@ -29,21 +29,13 @@ void Slime::AI() {
 	this->_hitBox.moveBox(this->_x, this->_y);
 }
 
-void Slime::handleCollision() {
-	switch (this->_direction) {
-	case (FORWARD):
-		this->_direction = BACKWARD;
-		break;
-	case (BACKWARD) :
-		this->_direction = FORWARD;
-		break;
-	case (LEFT) :
-		this->_direction = RIGHT;
-		break;
-	case (RIGHT) :
-		this->_direction = RIGHT;
-		break;
-	}
+void Slime::handleCollision(Direction collision) {
+	/*
+	*We are checking what side with the tile the enemy is colliding with i.e. if moving to the left we will collide on the right side of the tile
+	*Since we want the enemy to move in the opposite direction of the collision we would then move to the right in this example
+	*So the direction we are switching to is the same side as we are colliding for
+	*/
+	this->_direction = collision;
 }
 
 void Slime::updateHealth(signed int amntToUpdate) {

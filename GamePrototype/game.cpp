@@ -131,7 +131,7 @@ void Game::update(Uint32 elapsedTime, Graphics &graphics) {
 	}
 	collision = this->_map.checkCollisions(this->_enemies.getHitBox());
 	if (collision != NONE) {
-		this->_enemies.handleCollision();
+		this->_enemies.handleCollision(collision);
 	}
 	if (this->_player.getHitBox().checkCollision(this->_enemies.getHitBox()) != NONE) {
 		if (this->_player.isAttacking()) {

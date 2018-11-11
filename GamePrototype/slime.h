@@ -14,7 +14,7 @@ public:
 	~Slime();
 
 	void AI();
-	void handleCollision();
+	void handleCollision(Direction collision);
 	void updateOffset(float mX, float mY);
 
 	void updateHealth(signed int amntToUpdate);
