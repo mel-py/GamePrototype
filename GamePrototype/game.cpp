@@ -104,11 +104,9 @@ void Game::update(Uint32 elapsedTime, Graphics &graphics) {
 	this->_player.update(elapsedTime);
 	this->_enemies.update(elapsedTime);
 
-	bool collision = this->_map.checkCollisions(this->_player.getHitBox());
-	if (collision) {
-		Direction *direcs = this->_player.getDirection();
-		for (int i = 0; i < 2; i++) {
-			switch (direcs[i]) {
+	Direction collision = this->_map.checkCollisions(this->_player.getHitBox());
+	if (collision != NONE) {
+		switch (collision) {
 			case (BACKWARD):
 				if (!this->_map.updateOffset(0.0, -0.1, graphics.getResolution(), this->_player.getPlayerOffset())) {
 					this->_player.updatePlayerOffset(0.0, 0.1);
@@ -119,26 +117,23 @@ void Game::update(Uint32 elapsedTime, Graphics &graphics) {
 					this->_player.updatePlayerOffset(0.0, -0.1);
 				}
 				break;
-			case (LEFT):
+			case (RIGHT):
 				if (!this->_map.updateOffset(-0.1, 0.0, graphics.getResolution(), this->_player.getPlayerOffset())) {
 					this->_player.updatePlayerOffset(0.1, 0.0);
 				}
 				break;
-			case (RIGHT):
+			case (LEFT):
 				if (!this->_map.updateOffset(0.1, 0.0, graphics.getResolution(), this->_player.getPlayerOffset())) {
 					this->_player.updatePlayerOffset(-0.1, 0.0);
 				}
 				break;
-			case (NONE):
-				break;
-			}
 		}
 	}
 	collision = this->_map.checkCollisions(this->_enemies.getHitBox());
-	if (collision) {
+	if (collision != NONE) {
 		this->_enemies.handleCollision();
 	}
-	if (this->_player.getHitBox().checkCollision(this->_enemies.getHitBox())) {
+	if (this->_player.getHitBox().checkCollision(this->_enemies.getHitBox()) != NONE) {
 		if (this->_player.isAttacking()) {
 			this->_enemies.updateHealth(-10);
 		} else if (elapsedTime % 500 == 0) {

@@ -39,23 +39,52 @@ Vector2 HitBox::getOffset() {
 	return this->_offset;
 }
 
-bool HitBox::checkCollision(HitBox box) {
+Direction HitBox::checkCollision(HitBox box) {
 	Vector2 size2 = box.getSize();
 	Vector2 pos2 = box.getPosition();
 	Vector2 offset2 = box.getOffset();
 
+	//check is a collision is occuring
 	if (this->_pos.x + this->_dimensions.x + this->_offset.x < pos2.x + offset2.x) {
-		return false; //box 1 is to the left of box 2
+		return NONE; //box 1 is to the left of box 2
 	}
 	if (this->_pos.x + this->_offset.x > pos2.x + size2.x + offset2.x) {
-		return false; //box 1 is to the right of box 2
+		return NONE; //box 1 is to the right of box 2
 	}
 	if (this->_pos.y + this->_dimensions.y + this->_offset.y < pos2.y + offset2.y) {
-		return false; //box 1 is above box 2
+		return NONE; //box 1 is above box 2
 	}
 	if (this->_pos.y + this->_offset.y > pos2.y + size2.y + offset2.y) {
-		return false; //box 1 is below box 2
+		return NONE; //box 1 is below box 2
 	}
+
+	//a collision is occuring, check what side its occuring on
+	Vector2 boxPos = box.getPosition();
+	Vector2 boxSize = box.getSize();
+	Vector2 boxOffset = box.getOffset();
+	//Box1 Right - Box2 Left
+	int amntRight = (this->_dimensions.x + this->_offset.x + this->_pos.x) - (boxPos.x + boxOffset.x);
+	//Box2 Left - Box1 Left
+	int amntLeft = (boxPos.x + boxOffset.x) - (this->_pos.x + this->_offset.x);
+	//Box2 bottom - Box1 Top
+	int amntTop = (boxPos.y + boxOffset.y + boxSize.y) - (this->_pos.y + this->_offset.y);
+	//Box1 bottom - Box2 Top
+	int amntBottom = (this->_dimensions.y + this->_pos.y + this->_offset.y) - (boxPos.y + boxOffset.y);
+
+	int vals[4] = { abs(amntRight), abs(amntLeft), abs(amntBottom), abs(amntTop) };
+	int lowest = vals[0];
+	for (int i = 1; i < 4; i++) {
+		if (vals[i] < lowest) {
+			lowest = vals[i];
+		}
+	}
+
+	return
+		lowest == abs(amntRight) ? Direction::RIGHT :
+		lowest == abs(amntLeft) ? Direction::LEFT :
+		lowest == abs(amntBottom) ? Direction::BACKWARD :
+		lowest == abs(amntTop) ? Direction::FORWARD :
+		Direction::NONE;
 }
 
 void HitBox::draw(Graphics &graphics) {
