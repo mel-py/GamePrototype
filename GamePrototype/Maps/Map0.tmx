@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="25" height="25" tilewidth="32" tileheight="32" infinite="0" nextobjectid="35">
+<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="25" height="25" tilewidth="32" tileheight="32" infinite="0" nextobjectid="42">
  <tileset firstgid="1" source="map1_tile.tsx"/>
  <layer name="Background" width="25" height="25">
   <data>
@@ -630,6 +630,23 @@
    <tile gid="5"/>
   </data>
  </layer>
+ <objectgroup name="Spawn">
+  <object id="35" name="Player" x="296" y="208" width="12" height="13">
+   <ellipse/>
+  </object>
+  <object id="37" name="Enemy" x="550" y="105" width="11" height="12">
+   <ellipse/>
+  </object>
+  <object id="38" name="Enemy" x="167" y="649" width="12" height="12">
+   <ellipse/>
+  </object>
+  <object id="39" name="Enemy" x="687" y="584" width="13" height="14">
+   <ellipse/>
+  </object>
+  <object id="40" name="Enemy" x="461" y="440" width="12" height="12">
+   <ellipse/>
+  </object>
+ </objectgroup>
  <objectgroup name="Collision">
   <object id="5" x="1" y="1" width="96" height="96"/>
   <object id="6" x="98" y="4" width="31" height="60"/>

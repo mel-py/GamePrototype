@@ -16,7 +16,7 @@ public:
 	Map(string fileNameMap, string fileNameTile, int tileSheetHeight, int tileSheetWidth, Graphics &graphics);
 	~Map();
 
-	vector <Direction> checkCollisions(HitBox box);
+	bool checkCollisions(HitBox box);
 
 	bool updateOffset(float mX, float mY, Vector2 resolution, Vector2 playerOffset); //scroll the map when the player moves
 	void draw(Graphics &graphics);

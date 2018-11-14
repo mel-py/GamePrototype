@@ -23,8 +23,7 @@ Player::Player(int x, int y, string path, Graphics &graphics) {
 
 	this->_hitBox = HitBox(x, y, 32, 32);
 
-	this->_directions[0] = FORWARD;
-	this->_directions[1] = NONE;
+	this->_directions = FORWARD;
 
 	this->_health = 100;
 	this->_energy = 100;
@@ -35,23 +34,20 @@ Player::Player(int x, int y, string path, Graphics &graphics) {
 Player::~Player() {}
 
 void Player::movePlayer(Direction direction) {
-	this->_sprites[this->_directions[0]].playAnimation();
-	if (this->_directionIndex < 2) {
-		this->_directions[this->_directionIndex] = direction;
-		this->_directionIndex++;
-	}	
+	this->_directions = direction;
+	this->_sprites[this->_directions].playAnimation();
 }
 
 void Player::attack() {
 	if (!this->_isAttacking) {
-		if (this->_directions[0] == LEFT) {
-			this->_directions[0] = ATTACK_LEFT;
-		} else if (this->_directions[0] == RIGHT) {
-			this->_directions[0] = ATTACK_RIGHT;
-		} else if (this->_directions[0] == FORWARD) {
-			this->_directions[0] = ATTACK_FORWARD;
-		} else if (this->_directions[0] == BACKWARD) {
-			this->_directions[0] = ATTACK_BACKWARD;
+		if (this->_directions == LEFT) {
+			this->_directions = ATTACK_LEFT;
+		} else if (this->_directions == RIGHT) {
+			this->_directions = ATTACK_RIGHT;
+		} else if (this->_directions == FORWARD) {
+			this->_directions = ATTACK_FORWARD;
+		} else if (this->_directions == BACKWARD) {
+			this->_directions = ATTACK_BACKWARD;
 		}
 		this->_isAttacking = true;
 	}
@@ -59,14 +55,14 @@ void Player::attack() {
 
 void Player::stopAttacking() {
 	if (this->_isAttacking) {
-		if (this->_directions[0] == ATTACK_LEFT) {
-			this->_directions[0] = LEFT;
-		} else if (this->_directions[0] == ATTACK_RIGHT) {
-			this->_directions[0] = RIGHT;
-		} else if (this->_directions[0] == ATTACK_FORWARD) {
-			this->_directions[0] = FORWARD;
-		} else if (this->_directions[0] == ATTACK_BACKWARD) {
-			this->_directions[0] = BACKWARD;
+		if (this->_directions == ATTACK_LEFT) {
+			this->_directions = LEFT;
+		} else if (this->_directions == ATTACK_RIGHT) {
+			this->_directions = RIGHT;
+		} else if (this->_directions == ATTACK_FORWARD) {
+			this->_directions = FORWARD;
+		} else if (this->_directions == ATTACK_BACKWARD) {
+			this->_directions = BACKWARD;
 		}
 		this->_isAttacking = false;
 	}
@@ -77,8 +73,6 @@ bool Player::isAttacking() {
 }
 
 void Player::beginNewFrame() {
-	this->_directionIndex = 0;
-	this->_directions[1] = NONE;
 }
 
 void Player::updatePlayerOffset(float mX, float mY) {
@@ -92,14 +86,14 @@ Vector2 Player::getPlayerOffset() {
 }
 
 void Player::stopMoving() {
-	this->_sprites[this->_directions[0]].stopAnimation();
+	this->_sprites[this->_directions].stopAnimation();
 }
 
 HitBox Player::getHitBox() {
 	return this->_hitBox;
 }
 
-Direction* Player::getDirection() {
+Direction Player::getDirection() {
 	return this->_directions;
 }
 
@@ -111,11 +105,11 @@ void Player::update(Uint32 elapsedTime) {
 	if (this->_isAttacking && elapsedTime % 200 == 0) {
 		stopAttacking();
 	}
-	this->_sprites[this->_directions[0]].update(elapsedTime);
+	this->_sprites[this->_directions].update(elapsedTime);
 }
 
 void Player::draw(Graphics &graphics) {
-	this->_sprites[this->_directions[0]].draw(this->_x, this->_y, graphics);
+	this->_sprites[this->_directions].draw(this->_x, this->_y, graphics);
 	this->_hitBox.draw(graphics);
 
 	//draw the health bar

@@ -28,7 +28,7 @@ public:
 	Vector2 getPlayerOffset();
 
 	HitBox getHitBox();
-	Direction* getDirection();
+	Direction getDirection();
 
 	void beginNewFrame();
 
@@ -46,7 +46,7 @@ private:
 	int _health; //total health of the player
 	int _energy; //total energy of the player
 
-	Direction _directions[2]; //since the player can move in two directions at once store it as a 2d array
+	Direction _directions;
 	/*
 	Since the player can move in two directions at once (i.e. forward and left) we need to know if the first or second direction
 	in the array has been updated last (i.e. forward was already stored in the array so store left in the second array element)

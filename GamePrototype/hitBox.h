@@ -19,7 +19,7 @@ public:
 	Vector2 getPosition();
 	Vector2 getOffset();
 
-	Direction checkCollision(HitBox box);
+	bool checkCollision(HitBox box);
 
 	void draw(Graphics &graphics);
 private:

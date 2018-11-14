@@ -1,4 +1,6 @@
 #include "slime.h"
+#include <stdlib.h>
+#include <time.h>
 
 Slime::Slime() {}
 
@@ -10,7 +12,18 @@ Slime::Slime(int x, int y, int posX, int posY, int height, int width, string pat
 	this->_sprite = Sprite(this->_x, this->_y, width, height, posX, posY, path, graphics);
 	this->_hitBox = HitBox(x, y, width * 2, height * 2);
 
-	this->_direction = FORWARD;
+	//randomize the direction
+	srand(time(NULL));
+	int direc = rand() % 1 + 4;
+	if (direc == 1) {
+		this->_direction = FORWARD;
+	} else if (direc == 2) {
+		this->_direction = BACKWARD;
+	} else if (direc == 3) {
+		this->_direction = LEFT;
+	} else if (direc == 4) {
+		this->_direction = RIGHT;
+	}
 	this->_health = 10;
 }
 
@@ -29,13 +42,16 @@ void Slime::AI() {
 	this->_hitBox.moveBox(this->_x, this->_y);
 }
 
-void Slime::handleCollision(Direction collision) {
-	/*
-	*We are checking what side with the tile the enemy is colliding with i.e. if moving to the left we will collide on the right side of the tile
-	*Since we want the enemy to move in the opposite direction of the collision we would then move to the right in this example
-	*So the direction we are switching to is the same side as we are colliding for
-	*/
-	this->_direction = collision;
+void Slime::handleCollision() {
+	if (this->_direction == FORWARD) {
+		this->_direction = BACKWARD;
+	} else if (this->_direction == BACKWARD) {
+		this->_direction = FORWARD;
+	} else if (this->_direction == RIGHT) {
+		this->_direction = LEFT;
+	} else if (this->_direction == LEFT) {
+		this->_direction = RIGHT;
+	}
 }
 
 void Slime::updateHealth(signed int amntToUpdate) {

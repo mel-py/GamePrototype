@@ -89,14 +89,17 @@ void Map::loadMap(Graphics &graphics) {
 	//get the hitboxes for walls and stuff
 	XMLElement* objectGroup = mapNode->FirstChildElement("objectgroup");
 	while (objectGroup) {
-		XMLElement* object = objectGroup->FirstChildElement("object");
-		while (object) {
-			float x = object->IntAttribute("x");
-			float y = object->IntAttribute("y");
-			int width = object->IntAttribute("width");
-			int height = object->IntAttribute("height");
-			this->_hitBoxes.push_back(HitBox(x, y, width, height));
-			object = object->NextSiblingElement("object");
+		string layerName = objectGroup->Attribute("name");
+		if (layerName == "Collision") {
+			XMLElement* object = objectGroup->FirstChildElement("object");
+			while (object) {
+				float x = object->IntAttribute("x");
+				float y = object->IntAttribute("y");
+				int width = object->IntAttribute("width");
+				int height = object->IntAttribute("height");
+				this->_hitBoxes.push_back(HitBox(x, y, width, height));
+				object = object->NextSiblingElement("object");
+			}
 		}
 		objectGroup = objectGroup->NextSiblingElement("objectgroup");
 	}
@@ -162,15 +165,13 @@ bool Map::updateOffset(float mX, float mY, Vector2 resolution, Vector2 playerOff
 	return true;
 }
 
-vector <Direction> Map::checkCollisions(HitBox box) {
-	vector <Direction> collisions;
+bool Map::checkCollisions(HitBox box) {
 	for (int i = 0; i < this->_hitBoxes.size(); i++) {
-		Direction direc = this->_hitBoxes.at(i).checkCollision(box);
-		if (direc != NONE) {
-			collisions.push_back(direc);
+		if(this->_hitBoxes.at(i).checkCollision(box) == true) {
+			return true;
 		}
 	}
-	return collisions;
+	return false;
 }
 
 void Map::test() {
