@@ -18,6 +18,9 @@ public:
 
 	bool checkCollisions(HitBox box);
 
+	vector<Vector2> getEnemySpawns();
+	Vector2 getPlayerSpawn();
+
 	bool updateOffset(float mX, float mY, Vector2 resolution, Vector2 playerOffset); //scroll the map when the player moves
 	void draw(Graphics &graphics);
 private:
@@ -30,6 +33,9 @@ private:
 	
 	float _mapOffsetX; //position of all the tiles for screen scrolling
 	float _mapOffsetY;
+
+	vector<Vector2> _enemies;
+	Vector2 _playerSpawn;
 
 	vector<Tile> _tiles;
 	SDL_Texture* _tileset;

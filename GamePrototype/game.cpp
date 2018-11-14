@@ -19,12 +19,16 @@ Game::~Game() {}
 void Game::game_loop() {
 	Graphics graphics;
 	Vector2 resolution = graphics.getResolution();
+	this->_map = Map("Maps/map0.tmx", "Sprites/map1.png", 8, 13, graphics);
 	this->_player = Player(resolution.x / 2, resolution.y / 2, "Sprites/notlink.png", graphics);
 	this->_player.stopMoving();
-	this->_enemies = Slime(150, 50, 0, 0, 16, 16, "Sprites/smushroom.png", graphics);
+	vector<Vector2> enemySpawns = this->_map.getEnemySpawns();
+	for (int i = 0; i < enemySpawns.size(); i++) {
+		Vector2 current = enemySpawns.at(i);
+		this->_enemies .push_back(Slime(current.x, current.y, 0, 0, 16, 16, "Sprites/smushroom.png", graphics));
+	}
 	SDL_Event e;
 	InputManager input;
-	this->_map = Map("Maps/map0.tmx", "Sprites/map1.png", 8, 13, graphics);
 	bool offset; //false if the map offset is not able to move but a button is pressed
 
 	while (true) {
@@ -49,7 +53,9 @@ void Game::game_loop() {
 				if (offset == false) {
 					this->_player.updatePlayerOffset(0.0, -0.1);
 				} else if (offset == true) {
-					this->_enemies.updateOffset(0.0, 0.1);
+					for (int i = 0; i < this->_enemies.size(); i++) {
+						this->_enemies.at(i).updateOffset(0.0, 0.1);
+					}
 				}
 			} else if (input.isKeyDown(SDL_SCANCODE_S) == true) {
 				this->_player.movePlayer(FORWARD);
@@ -57,7 +63,9 @@ void Game::game_loop() {
 				if (offset == false) {
 					this->_player.updatePlayerOffset(0.0, 0.1);
 				} else if (offset == true) {
-					this->_enemies.updateOffset(0.0, -0.1);
+					for (int i = 0; i < this->_enemies.size(); i++) {
+						this->_enemies.at(i).updateOffset(0.0, -0.1);
+					}
 				}
 			} else if (input.isKeyDown(SDL_SCANCODE_A) == true) {
 				this->_player.movePlayer(LEFT);
@@ -65,7 +73,9 @@ void Game::game_loop() {
 				if (offset == false) {
 					this->_player.updatePlayerOffset(-0.1, 0.0);
 				} else if (offset == true) {
-					this->_enemies.updateOffset(0.1, 0.0);
+					for (int i = 0; i < this->_enemies.size(); i++) {
+						this->_enemies.at(i).updateOffset(0.1, 0.0);
+					}
 				}
 			} else if (input.isKeyDown(SDL_SCANCODE_D) == true) {
 				this->_player.movePlayer(RIGHT);
@@ -73,7 +83,9 @@ void Game::game_loop() {
 				if (offset == false) {
 					this->_player.updatePlayerOffset(0.1, 0.0);
 				} else if (offset == true) {
-					this->_enemies.updateOffset(-0.1, 0.0);
+					for (int i = 0; i < this->_enemies.size(); i++) {
+						this->_enemies.at(i).updateOffset(-0.1, 0.0);
+					}
 				}
 			} 
 			if (input.isKeyDown(SDL_SCANCODE_W) == false && input.isKeyDown(SDL_SCANCODE_S) == false
@@ -92,13 +104,17 @@ void Game::draw(Graphics &graphics) {
 	graphics.clear();
 	this->_map.draw(graphics);
 	this->_player.draw(graphics);
-	this->_enemies.draw(graphics);
+	for (int i = 0; i < this->_enemies.size(); i++) {
+		this->_enemies.at(i).draw(graphics);
+	}
 	graphics.flip();
 }
 
 void Game::update(Uint32 elapsedTime, Graphics &graphics) {
 	this->_player.update(elapsedTime);
-	this->_enemies.update(elapsedTime);
+	for (int i = 0; i < this->_enemies.size(); i++) {
+		this->_enemies.at(i).update(elapsedTime);
+	}
 
 	bool collision = this->_map.checkCollisions(this->_player.getHitBox());
 	if (collision) {
@@ -113,12 +129,12 @@ void Game::update(Uint32 elapsedTime, Graphics &graphics) {
 				this->_player.updatePlayerOffset(0.0, -0.1);
 			}
 			break;
-		case (RIGHT):
+			case (LEFT):
 			if (!this->_map.updateOffset(-0.1, 0.0, graphics.getResolution(), this->_player.getPlayerOffset())) {
 				this->_player.updatePlayerOffset(0.1, 0.0);
 			}
 			break;
-		case (LEFT):
+		case (RIGHT):
 			if (!this->_map.updateOffset(0.1, 0.0, graphics.getResolution(), this->_player.getPlayerOffset())) {
 				this->_player.updatePlayerOffset(-0.1, 0.0);
 			}
@@ -126,15 +142,17 @@ void Game::update(Uint32 elapsedTime, Graphics &graphics) {
 		}
 	}
 
-	collision = this->_map.checkCollisions(this->_enemies.getHitBox());
-	if (collision) {
-		this->_enemies.handleCollision();
-	}
-	if (this->_player.getHitBox().checkCollision(this->_enemies.getHitBox())) {
-		if (this->_player.isAttacking()) {
-			this->_enemies.updateHealth(-10);
-		} else if (elapsedTime % 500 == 0) {
-			this->_player.updateHealth(-1);
+	for (int i = 0; i < this->_enemies.size(); i++) {
+		collision = this->_map.checkCollisions(this->_enemies.at(i).getHitBox());
+		if (collision) {
+			this->_enemies.at(i).handleCollision();
+		}
+		if (this->_player.getHitBox().checkCollision(this->_enemies.at(i).getHitBox())) {
+			if (this->_player.isAttacking()) {
+				this->_enemies.at(i).updateHealth(-10);
+			} else if (elapsedTime % 500 == 0) {
+				this->_player.updateHealth(-1);
+			}
 		}
 	}
 }

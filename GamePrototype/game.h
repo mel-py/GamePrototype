@@ -17,7 +17,7 @@ public:
 	void update(Uint32 elapsedTime, Graphics &graphics);
 private:
 	Player _player;
-	Slime _enemies;
+	vector<Slime> _enemies;
 	Map _map;
 	Tile _testTile;
 

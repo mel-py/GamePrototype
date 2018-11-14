@@ -86,10 +86,10 @@ void Map::loadMap(Graphics &graphics) {
 		layer = layer->NextSiblingElement("layer");
 	}
 
-	//get the hitboxes for walls and stuff
 	XMLElement* objectGroup = mapNode->FirstChildElement("objectgroup");
 	while (objectGroup) {
 		string layerName = objectGroup->Attribute("name");
+		//get hitboxes for walls and stuff
 		if (layerName == "Collision") {
 			XMLElement* object = objectGroup->FirstChildElement("object");
 			while (object) {
@@ -100,9 +100,33 @@ void Map::loadMap(Graphics &graphics) {
 				this->_hitBoxes.push_back(HitBox(x, y, width, height));
 				object = object->NextSiblingElement("object");
 			}
+		//get all the spawn points
+		} else if (layerName == "Spawn") {
+			XMLElement* object = objectGroup->FirstChildElement("object");
+			while (object) {
+				string objectType = object->Attribute("name");
+				if (objectType == "Player") {
+					float x = object->IntAttribute("x");
+					float y = object->IntAttribute("y");
+					this->_playerSpawn = Vector2(x, y);
+				} else if (objectType == "Enemy") {
+					float x = object->IntAttribute("x");
+					float y = object->IntAttribute("y");
+					this->_enemies.push_back(Vector2(x, y));
+				}
+				object = object->NextSiblingElement("object");
+			}
 		}
 		objectGroup = objectGroup->NextSiblingElement("objectgroup");
 	}
+}
+
+vector<Vector2> Map::getEnemySpawns() {
+	return this->_enemies;
+}
+
+Vector2 Map::getPlayerSpawn() {
+	return this->_playerSpawn;
 }
 
 void Map::draw(Graphics &graphics) {
