@@ -1,5 +1,6 @@
 #include "slime.h"
 #include <stdlib.h>
+#include <iostream>
 #include <time.h>
 
 Slime::Slime() {}
@@ -13,8 +14,8 @@ Slime::Slime(int x, int y, int posX, int posY, int height, int width, string pat
 	this->_hitBox = HitBox(x, y, width * 2, height * 2);
 
 	//randomize the direction
-	srand(time(NULL));
-	int direc = rand() % 1 + 4;
+	int direc = 1 + rand() % 4;
+	cout << direc << endl;
 	if (direc == 1) {
 		this->_direction = FORWARD;
 	} else if (direc == 2) {
@@ -54,12 +55,13 @@ void Slime::handleCollision() {
 	}
 }
 
-void Slime::updateHealth(signed int amntToUpdate) {
+//return true if dead
+bool Slime::updateHealth(signed int amntToUpdate) {
 	this->_health += amntToUpdate;
 	if (this->_health <= 0) {
-		this->_x = -100;
-		this->_y = -100;
+		return true;
 	}
+	return false;
 }
 
 void Slime::updateOffset(float mX, float mY) {

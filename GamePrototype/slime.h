@@ -17,7 +17,7 @@ public:
 	void handleCollision();
 	void updateOffset(float mX, float mY);
 
-	void updateHealth(signed int amntToUpdate);
+	bool updateHealth(signed int amntToUpdate);
 
 	void draw(Graphics &graphics);
 	void update(Uint32 elapsedTime);

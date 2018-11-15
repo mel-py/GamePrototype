@@ -6,11 +6,13 @@
 #include "Vector2.h"
 #include <iostream>
 #include "globals.h"
+#include <time.h>
 
 using namespace std;
 
 Game::Game() {
 	SDL_Init(SDL_INIT_EVERYTHING);
+
 	game_loop();
 }
 
@@ -149,7 +151,10 @@ void Game::update(Uint32 elapsedTime, Graphics &graphics) {
 		}
 		if (this->_player.getHitBox().checkCollision(this->_enemies.at(i).getHitBox())) {
 			if (this->_player.isAttacking()) {
-				this->_enemies.at(i).updateHealth(-10);
+				bool dead = this->_enemies.at(i).updateHealth(-10);
+				if (dead) {
+					this->_enemies.erase(this->_enemies.begin() + i);
+				}
 			} else if (elapsedTime % 500 == 0) {
 				this->_player.updateHealth(-1);
 			}
