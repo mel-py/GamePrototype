@@ -55,56 +55,24 @@ void Game::game_loop() {
 				this->_player.attack();
 			} else {
 				if (input.isKeyDown(SDL_SCANCODE_W) == true) {
-					this->_newPositionY = -0.1;
+					this->_newPositionY = 0.1;
 					this->_playerDirection = BACKWARD;
 					this->_player.movePlayer(BACKWARD);
-					/*offset = this->_map.updateOffset(0.0, 0.1, resolution, this->_player.getPlayerOffset());
-					if (offset == false) {
-						this->_player.updatePlayerOffset(0.0, -0.1);
-					} else if (offset == true) {
-						for (int i = 0; i < this->_enemies.size(); i++) {
-							this->_enemies.at(i).updateOffset(0.0, 0.1);
-						}
-					}*/
 				} 
 				if (input.isKeyDown(SDL_SCANCODE_S) == true) {
-					this->_newPositionY = 0.1;
+					this->_newPositionY = -0.1;
 					this->_playerDirection = FORWARD;
 					this->_player.movePlayer(FORWARD);
-					/*offset = this->_map.updateOffset(0.0, -0.1, resolution, this->_player.getPlayerOffset());
-					if (offset == false) {
-						this->_player.updatePlayerOffset(0.0, 0.1);
-					} else if (offset == true) {
-						for (int i = 0; i < this->_enemies.size(); i++) {
-							this->_enemies.at(i).updateOffset(0.0, -0.1);
-						}
-					}*/
 				} 
 				if (input.isKeyDown(SDL_SCANCODE_A) == true) {
-					this->_newPositionX = -0.1;
+					this->_newPositionX = 0.1;
 					this->_playerDirection = LEFT;
 					this->_player.movePlayer(LEFT);
-					/*offset = this->_map.updateOffset(0.1, 0.0, resolution, this->_player.getPlayerOffset());
-					if (offset == false) {
-						this->_player.updatePlayerOffset(-0.1, 0.0);
-					} else if (offset == true) {
-						for (int i = 0; i < this->_enemies.size(); i++) {
-							this->_enemies.at(i).updateOffset(0.1, 0.0);
-						}
-					}*/
 				}
 				if (input.isKeyDown(SDL_SCANCODE_D) == true) {
-					this->_newPositionX = 0.1;
+					this->_newPositionX = -0.1;
 					this->_playerDirection = RIGHT;
 					this->_player.movePlayer(RIGHT);
-					/*offset = this->_map.updateOffset(-0.1, 0.0, resolution, this->_player.getPlayerOffset());
-					if (offset == false) {
-						this->_player.updatePlayerOffset(0.1, 0.0);
-					} else if (offset == true) {
-						for (int i = 0; i < this->_enemies.size(); i++) {
-							this->_enemies.at(i).updateOffset(-0.1, 0.0);
-						}
-					}*/
 				}
 				if (input.isKeyDown(SDL_SCANCODE_W) == false && input.isKeyDown(SDL_SCANCODE_S) == false
 					&& input.isKeyDown(SDL_SCANCODE_A) == false && input.isKeyDown(SDL_SCANCODE_D) == false) {
@@ -137,24 +105,45 @@ void Game::update(Uint32 elapsedTime, Graphics &graphics) {
 	}
 
 	if (this->_playerDirection != NONE) {
+		Vector2 resolution = graphics.getResolution();
+
 		//check the x direction
 		if (this->_newPositionX != 0) {
-			this->_player.updatePlayerOffset(this->_newPositionX, 0);
-
+			bool offset = this->_map.updateOffset(this->_newPositionX, 0.0, resolution, this->_player.getPlayerOffset());
+			if (offset == false) {
+				this->_player.updatePlayerOffset(this->_newPositionX * -1, 0.0);
+			}
 			bool collision = this->_map.checkCollisions(this->_player.getHitBox());
 			if (collision) {
-				this->_player.updatePlayerOffset(this->_newPositionX * -1, 0);
+				if (offset) {
+					this->_map.updateOffset(this->_newPositionX * -1, 0.0, resolution, this->_player.getPlayerOffset());
+				} else {
+					this->_player.updatePlayerOffset(this->_newPositionX, 0);
+				}
+			} else if (offset) {
+				for (int i = 0; i < this->_enemies.size(); i++) {
+					this->_enemies.at(i).updateOffset(this->_newPositionX, 0.0);
+				}
 			}
 		}
 
 		//check the y direction
-		//check the x direction
 		if (this->_newPositionY != 0) {
-			this->_player.updatePlayerOffset(0, this->_newPositionY);
-
+			bool offset = this->_map.updateOffset(0.0, this->_newPositionY, resolution, this->_player.getPlayerOffset());
+			if (offset == false) {
+				this->_player.updatePlayerOffset(0.0, this->_newPositionY * -1);
+			}
 			bool collision = this->_map.checkCollisions(this->_player.getHitBox());
 			if (collision) {
-				this->_player.updatePlayerOffset(0, this->_newPositionY * -1);
+				if (offset) {
+					this->_map.updateOffset(0.0, this->_newPositionY * -1, resolution, this->_player.getPlayerOffset());
+				} else {
+					this->_player.updatePlayerOffset(0, this->_newPositionY);
+				}
+			} else if (offset) {
+				for (int i = 0; i < this->_enemies.size(); i++) {
+					this->_enemies.at(i).updateOffset(0.0, this->_newPositionY);
+				}
 			}
 		}
 	}
