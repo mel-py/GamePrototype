@@ -17,6 +17,8 @@ public:
 	void update(Uint32 elapsedTime, Graphics &graphics);
 private:
 	Player _player;
+	Direction _playerDirection;
+	float _newPositionX, _newPositionY; //keep track of how far we are moving the player for collision detection
 	vector<Slime> _enemies;
 	Map _map;
 	Tile _testTile;

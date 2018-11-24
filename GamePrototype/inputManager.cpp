@@ -4,6 +4,11 @@ void InputManager::update() {
 
 }
 
+void InputManager::beginNewFrame() {
+	this->_keyDown.clear();
+	this->_keyUp.clear();
+}
+
 void InputManager::KeyUpEvent(SDL_Event& e) {
 	this->_keyUp[e.key.keysym.scancode] = true;
 	this->_keyDown[e.key.keysym.scancode] = false;

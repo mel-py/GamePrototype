@@ -10,6 +10,8 @@ class InputManager {
 public:
 	void update();
 
+	void beginNewFrame();
+
 	void KeyUpEvent(SDL_Event& e);
 	void KeyDownEvent(SDL_Event& e);
 
@@ -17,9 +19,9 @@ public:
 	bool isKeyUp(SDL_Scancode key);
 	bool isKeyHeld(SDL_Scancode key);
 private:
-	bool _keyDown[323];
-	bool _keyUp[323];
-	bool _keyPressed[323];
+	map<SDL_Scancode, bool> _keyDown;
+	map<SDL_Scancode, bool> _keyUp;
+	map<SDL_Scancode, bool> _keyPressed;
 };
 
 #endif
