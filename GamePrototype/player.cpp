@@ -39,7 +39,7 @@ void Player::movePlayer(Direction direction) {
 }
 
 void Player::attack() {
-	if (!this->_isAttacking) {
+	if (!this->_isAttacking && this->_energy > 0) {
 		if (this->_directions == LEFT) {
 			this->_directions = ATTACK_LEFT;
 		} else if (this->_directions == RIGHT) {
@@ -50,6 +50,7 @@ void Player::attack() {
 			this->_directions = ATTACK_BACKWARD;
 		}
 		this->_isAttacking = true;
+		this->_energy -= 5;
 	}
 }
 
@@ -104,6 +105,8 @@ void Player::updateHealth(signed int amountToAdd) {
 void Player::update(Uint32 elapsedTime) {
 	if (this->_isAttacking && elapsedTime % 200 == 0) {
 		stopAttacking();
+	} else if (!this->_isAttacking && elapsedTime % 200 == 0 && this->_energy < 100) {
+		this->_energy += 5;
 	}
 	this->_sprites[this->_directions].update(elapsedTime);
 }
