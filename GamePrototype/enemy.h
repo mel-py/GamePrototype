@@ -4,6 +4,8 @@
 #include "graphics.h"
 #include "sprite.h"
 #include "globals.h"
+#include <vector>
+#include "hitBox.h"
 
 using namespace std;
 
@@ -20,8 +22,11 @@ public:
 
 	void draw(Graphics &graphics);
 	void update(Uint32 elapsedTime);
+
+	bool checkCollision(vector<HitBox> mapTiles);
 private:
 	Sprite _sprite;
+	HitBox _hitBox;
 
 	Direction _direction;
 	float _x, _y;

@@ -189,6 +189,10 @@ bool Map::updateOffset(float mX, float mY, Vector2 resolution, Vector2 playerOff
 	return true;
 }
 
+vector<HitBox> Map::getHitBoxes() {
+	return this->_hitBoxes;
+}
+
 bool Map::checkCollisions(HitBox box) {
 	for (int i = 0; i < this->_hitBoxes.size(); i++) {
 		if(this->_hitBoxes.at(i).checkCollision(box) == true) {

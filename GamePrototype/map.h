@@ -18,6 +18,8 @@ public:
 
 	bool checkCollisions(HitBox box);
 
+	vector<HitBox> getHitBoxes();
+
 	vector<Vector2> getEnemySpawns();
 	Vector2 getPlayerSpawn();
 

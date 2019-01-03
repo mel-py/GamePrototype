@@ -134,6 +134,7 @@
     <ClCompile Include="map.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="slime.cpp" />
+    <ClCompile Include="spider.cpp" />
     <ClCompile Include="sprite.cpp" />
     <ClCompile Include="tile.cpp" />
     <ClCompile Include="tinyxml2.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="globals.h" />
     <ClInclude Include="hitBox.h" />
     <ClInclude Include="slime.h" />
+    <ClInclude Include="spider.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="inputManager.h" />

@@ -6,6 +6,7 @@
 #include "Map.h"
 #include <vector>
 #include "slime.h"
+#include "spider.h"
 
 class Game {
 public:
@@ -20,6 +21,7 @@ private:
 	Direction _playerDirection;
 	float _newPositionX, _newPositionY; //keep track of how far we are moving the player for collision detection
 	vector<Slime> _enemies;
+	vector<Spider> _spiders;
 	Map _map;
 	Tile _testTile;
 

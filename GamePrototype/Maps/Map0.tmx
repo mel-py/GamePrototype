@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="25" height="25" tilewidth="32" tileheight="32" infinite="0" nextobjectid="42">
+<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="25" height="25" tilewidth="32" tileheight="32" infinite="0" nextobjectid="53">
  <tileset firstgid="1" source="map1_tile.tsx"/>
  <layer name="Background" width="25" height="25">
   <data>
@@ -615,7 +615,7 @@
    <tile gid="5"/>
    <tile gid="5"/>
    <tile gid="5"/>
-   <tile gid="5"/>
+   <tile gid="1"/>
    <tile gid="5"/>
    <tile gid="5"/>
    <tile gid="5"/>
@@ -634,16 +634,22 @@
   <object id="35" name="Player" x="296" y="208" width="12" height="13">
    <ellipse/>
   </object>
-  <object id="37" name="Enemy" x="550" y="105" width="11" height="12">
+  <object id="37" name="Slime" x="550" y="105" width="11" height="12">
    <ellipse/>
   </object>
-  <object id="38" name="Enemy" x="167" y="649" width="12" height="12">
+  <object id="38" name="Slime" x="167" y="649" width="12" height="12">
    <ellipse/>
   </object>
-  <object id="39" name="Enemy" x="687" y="584" width="13" height="14">
+  <object id="39" name="Slime" x="687" y="584" width="13" height="14">
    <ellipse/>
   </object>
-  <object id="40" name="Enemy" x="461" y="440" width="12" height="12">
+  <object id="40" name="Slime" x="461" y="440" width="12" height="12">
+   <ellipse/>
+  </object>
+  <object id="51" name="Spider" x="652" y="331">
+   <ellipse/>
+  </object>
+  <object id="52" name="Spider" x="51" y="454">
    <ellipse/>
   </object>
  </objectgroup>
@@ -663,7 +669,7 @@
   <object id="17" x="767" y="128" width="33" height="546"/>
   <object id="18" x="674" y="739" width="33" height="61"/>
   <object id="19" x="97" y="737" width="32" height="63"/>
-  <object id="20" x="128" y="771" width="548" height="28"/>
+  <object id="20" x="128" y="771" width="255" height="28"/>
   <object id="21" x="288" y="98" width="33" height="31"/>
   <object id="22" x="608" y="161" width="34" height="32"/>
   <object id="23" x="160" y="161" width="32" height="63"/>
@@ -678,5 +684,17 @@
   <object id="32" x="577" y="578" width="32" height="31"/>
   <object id="33" x="481" y="671" width="32" height="33"/>
   <object id="34" x="481" y="671" width="32" height="33"/>
+  <object id="42" x="417" y="769" width="255" height="28"/>
+ </objectgroup>
+ <objectgroup name="Entry">
+  <object id="43" x="392" y="784" width="15" height="16">
+   <ellipse/>
+  </object>
+  <object id="44" x="1023" y="762">
+   <ellipse/>
+  </object>
+  <object id="45" x="1018" y="764">
+   <ellipse/>
+  </object>
  </objectgroup>
 </map>

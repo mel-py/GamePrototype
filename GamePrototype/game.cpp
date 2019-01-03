@@ -26,6 +26,7 @@ void Game::game_loop() {
 	this->_player.stopMoving();
 	this->_playerDirection = NONE;
 	vector<Vector2> enemySpawns = this->_map.getEnemySpawns();
+	this->_spiders.push_back(Spider(65, 100, 0, 0, 16, 32, "Sprites/spider.png", graphics));
 	for (int i = 0; i < enemySpawns.size(); i++) {
 		Vector2 current = enemySpawns.at(i);
 		this->_enemies .push_back(Slime(current.x, current.y, 0, 0, 16, 16, "Sprites/smushroom.png", graphics));
@@ -92,6 +93,7 @@ void Game::draw(Graphics &graphics) {
 	graphics.clear();
 	this->_map.draw(graphics);
 	this->_player.draw(graphics);
+	this->_spiders.at(0).draw(graphics);
 	for (int i = 0; i < this->_enemies.size(); i++) {
 		this->_enemies.at(i).draw(graphics);
 	}
@@ -103,7 +105,8 @@ void Game::update(Uint32 elapsedTime, Graphics &graphics) {
 	for (int i = 0; i < this->_enemies.size(); i++) {
 		this->_enemies.at(i).update(elapsedTime);
 	}
-
+	this->_spiders.at(0).update(elapsedTime, this->_map.getHitBoxes());
+	
 	if (this->_playerDirection != NONE) {
 		Vector2 resolution = graphics.getResolution();
 
@@ -158,6 +161,7 @@ void Game::update(Uint32 elapsedTime, Graphics &graphics) {
 				bool dead = this->_enemies.at(i).updateHealth(-10);
 				if (dead) {
 					this->_enemies.erase(this->_enemies.begin() + i);
+					this->_player.addExp(40);
 				}
 			} else if (elapsedTime % 500 == 0) {
 				this->_player.updateHealth(-1);

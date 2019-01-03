@@ -26,3 +26,12 @@ void Enemy::draw(Graphics &graphics) {
 void Enemy::update(Uint32 elapsedTime) {
 	AI();
 }
+
+bool Enemy::checkCollision(vector<HitBox> mapTiles) {
+	for (int i = 0; i < mapTiles.size(); i++) {
+		if (mapTiles.at(i).checkCollision(this->_hitBox)) {
+			return true;
+		}
+	}
+	return false;
+}

@@ -1,5 +1,6 @@
 #include "player.h"
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 
@@ -24,6 +25,10 @@ Player::Player(int x, int y, string path, Graphics &graphics) {
 	this->_hitBox = HitBox(x, y, 32, 32);
 
 	this->_directions = FORWARD;
+
+	this->_playerLevel = 1;
+	this->_experience = 0;
+	this->_experienceToLevel = pow((this->_playerLevel / this->_expConstant ), 2);
 
 	this->_health = 100;
 	this->_energy = 100;
@@ -102,6 +107,17 @@ void Player::updateHealth(signed int amountToAdd) {
 	this->_health += amountToAdd;
 }
 
+void Player::addExp(int expToAdd) {
+	this->_experience += expToAdd;
+	if (this->_experience >= this->_experienceToLevel) {
+		this->_playerLevel += 1;
+		cout << "Reached level " << this->_playerLevel << endl;
+		this->_experience = this->_experience - this->_experienceToLevel;
+		this->_experienceToLevel = pow((this->_playerLevel / this->_expConstant), 2);
+	}
+	cout << "Experience: " << this->_experience << endl;
+}
+
 void Player::update(Uint32 elapsedTime) {
 	if (this->_isAttacking && elapsedTime % 200 == 0) {
 		stopAttacking();
@@ -124,6 +140,12 @@ void Player::draw(Graphics &graphics) {
 	//energy bar
 	rectToDraw = { 275, 600, this->_energy, 25 };
 	SDL_SetRenderDrawColor(graphics.getRenderer(), 0, 220, 0, 60);
+	SDL_RenderFillRect(graphics.getRenderer(), &rectToDraw);
+	SDL_RenderDrawRect(graphics.getRenderer(), &rectToDraw);
+
+	//draw the exp bar
+	rectToDraw = { 75, 650, (25 / this->_experienceToLevel) * this->_experience, 25};
+	SDL_SetRenderDrawColor(graphics.getRenderer(), 0, 0, 255, 60);
 	SDL_RenderFillRect(graphics.getRenderer(), &rectToDraw);
 	SDL_RenderDrawRect(graphics.getRenderer(), &rectToDraw);
 }

@@ -34,6 +34,8 @@ public:
 
 	void updateHealth(signed int amountToAdd);
 
+	void addExp(int expToAdd);
+
 	void update(Uint32 elapsedTime);
 	void draw(Graphics &graphics);
 private:
@@ -43,6 +45,10 @@ private:
 
 	bool _isAttacking;
 
+	int _playerLevel;
+	int _experience;
+	int _experienceToLevel;
+	float _expConstant = 0.2;
 	int _health; //total health of the player
 	int _energy; //total energy of the player
 
